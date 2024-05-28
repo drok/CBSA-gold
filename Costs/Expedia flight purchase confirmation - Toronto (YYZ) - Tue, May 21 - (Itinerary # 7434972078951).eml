@@ -1,0 +1,3200 @@
+Return-Path: <364126281000010015302-c19135-6112b46a2d984e4a82e32148bef0be64@mg.expediamail.com>
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	 by sloti1d3t14 (Cyrus 3.1.6-541-gda5ca9a-fmstable-20190515v2) with LMTPA;
+	 Wed, 15 May 2019 12:52:48 -0400
+X-Cyrus-Session-Id: sloti1d3t14-1557939168-3672004-2-725909752259591497
+X-Sieve: CMU Sieve 3.0
+X-Spam-known-sender: no
+X-Spam-score: 0.0
+X-Spam-hits: BAYES_00 -1.9, DCC_CHECK 1.1, HTML_FONT_LOW_CONTRAST 0.001,
+  HTML_MESSAGE 0.001, ME_ZS_CLEAN -0.001, MIME_HTML_ONLY 0.723,
+  RCVD_IN_DNSWL_NONE -0.0001, SPF_PASS -0.001, URI_HEX 1.122,
+  USER_IN_DEF_SPF_WL -7.5, LANGUAGES en, BAYES_USED user, SA_VERSION 3.4.2
+X-Spam-source: IP='135.84.216.80', Host='gears216-80.expediamail.com', Country='US',
+  FromHeader='com', MailFrom='com'
+X-Spam-charsets: html='UTF-8'
+X-Resolved-to: rhociung@fastmail.com
+X-Delivered-to: radu.expedia@ohmi.org
+X-Mail-from: 364126281000010015302-c19135-6112b46a2d984e4a82e32148bef0be64@mg.expediamail.com
+Received: from mx6 ([10.202.2.205])
+  by compute4.internal (LMTPProxy); Wed, 15 May 2019 12:52:48 -0400
+Received: from mx6.messagingengine.com (localhost [127.0.0.1])
+	by mailmx.nyi.internal (Postfix) with ESMTP id D1E11A200F6
+	for <radu.expedia@ohmi.org>; Wed, 15 May 2019 12:52:46 -0400 (EDT)
+Received: from mx6.messagingengine.com (localhost [127.0.0.1])
+    by mx6.messagingengine.com (Authentication Milter) with ESMTP
+    id B0BCA2A3025;
+    Wed, 15 May 2019 12:52:46 -0400
+ARC-Seal: i=1; a=rsa-sha256; cv=none; d=messagingengine.com; s=fm2; t=
+    1557939166; b=IksQgy8zWvvR0KtSXn4xHOmuuO3ZwQK1fZFKiQzW04qazx9D0g
+    LVn9gd7RQTulwejdlqS3gSjTT/XtortqXj2dTQgXjPan06CetfUU55fVRLK0S0oh
+    dimwyaxGgHMVYKVNMrdFLAO8ZEhc04RDtRU2L8PTtarN9Siq3AQDlHA1WyPUHiPh
+    G2TWUSsetCTMzP5XBCpl9r2SMUNQ/7X5JzSyV5tqOmcfRYXMV8F3qt2L3zG+utrt
+    y2OrfADtTzl/xB/6rvbAk63jEqJa/NwkgwYkdc5vlEObmyfae7OwaDNvCznzBq4g
+    1kaZU72+jMwplgYt8qRLe2CUJT+HvNpyxdgQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=
+    messagingengine.com; h=date:from:reply-to:to:message-id:subject
+    :mime-version:content-type:list-unsubscribe; s=fm2; t=
+    1557939166; bh=RLi58p5MJeIf7Y7LTiaLA6D5KM6+wQPJsR+b842wcYE=; b=s
+    rB2sZAFd55nd0bmCwNGD1/UD6M5OWpV8BuhY7h+VPua+ua067iQwCErYGNofyTU0
+    wZIJowh2Rvh/kDZpLxhGrszmv9LgDcmawimLl0UKoNHteByWaKmhganLtCybcIOV
+    bnWvje2pFNYr1+R7dVPY4KbsOWO1oWQzjml527VH3asZfX5+ZJhKBw1SyH0dsu05
+    Pfk+E8/+i2duK0MD6ernhMx4HRgW7ir7+aOZRz5tE7PJbfgqOQhh1PIk0jBx65CI
+    q9uBXTJGC+j5hMTqlutdSqVdxChBshFRrFNUGsE015/MZx26kcz+a3+nvWQtWl8o
+    y71Z7Zs3eAaf7sqM73aeg==
+ARC-Authentication-Results: i=1; mx6.messagingengine.com; arc=none (no signatures found);
+    dkim=pass (1024-bit rsa key sha1) header.d=mg.expediamail.com
+    header.i=@mg.expediamail.com header.b=gzWMzzrI header.a=rsa-sha1
+    header.s=gears x-bits=1024;
+    dmarc=pass policy.published-domain-policy=reject
+    policy.applied-disposition=none policy.evaluated-disposition=none
+    (p=reject,d=none,d.eval=none) policy.policy-from=p
+    header.from=expediamail.com;
+    iprev=pass smtp.remote-ip=135.84.216.80 (gears216-80.expediamail.com);
+    spf=pass
+    smtp.mailfrom=
+    364126281000010015302-c19135-6112b46a2d984e4a82e32148bef0be64@mg.expediamail.com
+    smtp.helo=gears216-80.expediamail.com;
+    x-aligned-from=orgdomain_pass (Domain org match);
+    x-ptr=pass smtp.helo=gears216-80.expediamail.com
+    policy.ptr=gears216-80.expediamail.com;
+    x-return-mx=pass header.domain=expediamail.com policy.is_org=yes
+    (MX Record found);
+    x-return-mx=pass smtp.domain=mg.expediamail.com
+    policy.org_domain=expediamail.com policy.is_org=no (MX Record found);
+    x-tls=pass smtp.version=TLSv1.2 smtp.cipher=ECDHE-RSA-AES128-GCM-SHA256
+    smtp.bits=128/128;
+    x-vs=transactional:travel score=30 state=14;
+    x-zs=clean
+Authentication-Results: mx6.messagingengine.com;
+    arc=none (no signatures found);
+    dkim=pass (1024-bit rsa key sha1) header.d=mg.expediamail.com
+      header.i=@mg.expediamail.com header.b=gzWMzzrI header.a=rsa-sha1
+      header.s=gears x-bits=1024;
+    dmarc=pass policy.published-domain-policy=reject
+      policy.applied-disposition=none policy.evaluated-disposition=none
+      (p=reject,d=none,d.eval=none) policy.policy-from=p
+      header.from=expediamail.com;
+    iprev=pass smtp.remote-ip=135.84.216.80 (gears216-80.expediamail.com);
+    spf=pass
+      smtp.mailfrom=
+      364126281000010015302-c19135-6112b46a2d984e4a82e32148bef0be64@mg.expediamail.com
+      smtp.helo=gears216-80.expediamail.com;
+    x-aligned-from=orgdomain_pass (Domain org match);
+    x-ptr=pass smtp.helo=gears216-80.expediamail.com
+      policy.ptr=gears216-80.expediamail.com;
+    x-return-mx=pass header.domain=expediamail.com policy.is_org=yes
+      (MX Record found);
+    x-return-mx=pass smtp.domain=mg.expediamail.com
+      policy.org_domain=expediamail.com policy.is_org=no (MX Record found);
+    x-tls=pass smtp.version=TLSv1.2 smtp.cipher=ECDHE-RSA-AES128-GCM-SHA256
+      smtp.bits=128/128;
+    x-vs=transactional:travel score=30 state=14;
+    x-zs=clean
+X-ME-VSSU: VW5zdWI9bWFpbHRvOnVuc3ViLTM2NDEyNjI4MTAwMDAxMDAxNTMwMi1jMTkxMzUtNjExMm
+    I0NmEyZDk4NGU0YTgyZTMyMTQ4YmVmMGJlNjRAbWcuZXhwZWRpYW1haWwuY29t
+X-ME-VSSU: VW5zdWI9aHR0cDovL2xpbmsuZXhwZWRpYW1haWwuY29tL3VjLzIvMSUzQU5qUXhNall5T0
+    RFJTNBTURJdFl6RTVNVE0xTFRZeE1USmlORFpoTW1RNU9EUmxOR0U0TW1Vek1qRTBPR0ps
+    WmpCaVpUWTAlM0FjbUZrZFM1bGVIQmxaR2xoUUc5b2JXa3ViM0puJTNBVlZNdVVGUXVSVl
+    pGVGxSVVVrbEhSMFZTUlVSTlFVbE1TVTVITGtWT1UxQlZVa05JUVZORlEwOU9Sa2xTVFVG
+    VVNVOU9Ma1pNU1VkSVZDWkZUVXhFVkV3OVJFRlVSVEl3TVRrd05URTFMVWxUVTFWWUxsTk
+    pSRmd1UzBWWk9UUXdPRFV5TURrM056SXVVRUZKUkZndVRFRk9SMFZPWDFWVExrMURTVVJZ
+    TGxSRlUxUTBMbFpGVWxOWUxrMUpSRk14TFRJMU56a3pYekl0TWprMk9ESmZNeTB6TURFME
+    1GODBMVE13TVRRelh6VXRNamszTWpWZk5pMHpNREV6Tmw4M0xUTXdNVE0zJTNBbiUzQW4l
+    M0FHQ2ZjQlVkd1NYSGs0ZjloZjJGMXlR
+X-ME-VSCause: gggruggvucftvghtrhhoucdtuddrgeduuddrleekgddutddtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucdnvfhrrghvvghlucdlfe
+    dtmdenucfjughrpeffhfhrvffkufggtgfjsehmtdgtsgdttdejnecuhfhrohhmpedfgfig
+    phgvughirgdrtghomhdfuceogfigphgvughirgesvgigphgvughirghmrghilhdrtghomh
+    eqnecuffhomhgrihhnpegvgihpvgguihgrmhgrihhlrdgtohhmnecukfhppedufeehrdek
+    gedrvdduiedrkedtnecurfgrrhgrmhepihhnvghtpedufeehrdekgedrvdduiedrkedtpd
+    hhvghlohepghgvrghrshdvudeiqdektddrvgigphgvughirghmrghilhdrtghomhdpmhgr
+    ihhlfhhrohhmpeeofeeigeduvdeivdekuddttddttddutddtudehfedtvddqtgduledufe
+    ehqdeiudduvdgsgeeirgdvugelkeegvgegrgekvdgvfedvudegkegsvghftdgsvgeigees
+    mhhgrdgvgihpvgguihgrmhgrihhlrdgtohhmqeenucevlhhushhtvghrufhiiigvpedt
+X-ME-VSScore: 30
+X-ME-VSCategory: transactional:travel
+X-ME-ZSResult: clean
+Received-SPF: pass
+    (mg.expediamail.com: Sender is authorized to use '364126281000010015302-c19135-6112b46a2d984e4a82e32148bef0be64@mg.expediamail.com' in 'mfrom' identity (mechanism 'include:_spf.messagegears.net' matched))
+    receiver=mx6.messagingengine.com;
+    identity=mailfrom;
+    envelope-from="364126281000010015302-c19135-6112b46a2d984e4a82e32148bef0be64@mg.expediamail.com";
+    helo=gears216-80.expediamail.com;
+    client-ip=135.84.216.80
+Received: from gears216-80.expediamail.com (gears216-80.expediamail.com [135.84.216.80])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by mx6.messagingengine.com (Postfix) with ESMTPS
+	for <radu.expedia@ohmi.org>; Wed, 15 May 2019 12:52:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; s=gears; d=mg.expediamail.com;
+ h=Date:From:Reply-To:To:Message-ID:Subject:MIME-Version:Content-Type:
+ List-Unsubscribe;
+ bh=C1KnaTHIdr/ukLOJPdw64DqP6bE=;
+ b=gzWMzzrIEwLvakMOsV2CGOQU6PFYsFi2F1geLuEDfSrDXkL6Hd2Sqmwmq0BCNGrtBgFbiVQjemne
+   /bWwDSNm/W+QXQxrStjHk/sUH1tvaRAuLT3KHqmwgXQrG7wWGAeUqcSrMYFyVH/3Z7LaVnDd40F6
+   0sa8xL+VA/ucyVJ7W9E=
+Date: Wed, 15 May 2019 12:52:42 -0400 (EDT)
+From: "Expedia.com" <Expedia@expediamail.com>
+Reply-To: Expedia@expediamail.com
+To: radu.expedia@ohmi.org
+Message-ID: <1045606635.59240171.1557939162167.JavaMail.cloud@mta0102.messagegears.net>
+Subject: Expedia flight purchase confirmation - Toronto (YYZ) - Tue, May 21
+ - (Itinerary # 7434972078951)
+MIME-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_59240169_1155545267.1557939162165"
+X-Original-To: radu.expedia@ohmi.org
+List-Unsubscribe: <http://link.expediamail.com/uc/2/1%3ANjQxMjYyODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5leHBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3An%3An%3AGCfcBUdwSXHk4f9hf2F1yQ>, <mailto:unsub-364126281000010015302-c19135-6112b46a2d984e4a82e32148bef0be64@mg.expediamail.com>
+
+------=_Part_59240169_1155545267.1557939162165
+Content-Type: multipart/related; 
+	boundary="----=_Part_59240170_1200021994.1557939162165"
+
+------=_Part_59240170_1200021994.1557939162165
+Content-Type: text/html;charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.=
+w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns=3D"http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv=3D"Content-Type"content=3D"text/html; charset=3Dutf-8"/>
+<meta name=3D"viewport"content=3D"width=3Ddevice-width; maximum-scale=3D1.0=
+;">
+<meta name=3D=E2=80=9Dx-apple-disable-message-reformatting=E2=80=9D>
+<title>Expedia.com</title>
+<style type=3D"text/css">
+/*Resets*/
+body[class=3D"FullWidthHtmlBody"] {
+min-width: 100% !important;
+font-family: Arial, sans-serif;
+-webkit-font-smoothing: antialiased;
+}
+/* Outlook fixes */
+#outlook a {
+padding: 0;
+}
+table {
+mso-table-lspace: 0pt;
+mso-table-rspace: 0pt;
+}
+/* Fixes - Link issues in Apple Devices */
+.appleLinkBodyTxt a {
+color: #616161;
+text-decoration: none;
+}
+.appleLinkBodyTxtWh a {
+color: #FFFFFF;
+text-decoration: none;
+}
+.appleLinkBodyTxt1f a {
+color: #1F1F1F;
+text-decoration: none;
+}
+/* Hotmail fixes */
+.ReadMsgBody {
+width: 100% !important;
+}
+.ExternalClass {
+width: 100% !important;
+}
+.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font,=
+ .ExternalClass td, .ExternalClass div {
+line-height: 100%;
+}
+.supCopy {vertical-align: baseline; position: relative; top: -0.4em;}
+.subCopy {vertical-align: baseline; position: relative; top: 0.4em;}
+/* /\/\/\/\/\/\/\/\/ iPhone 6+ style /\/\/\/\/\/\/\/\/ */
+@media only screen and (max-width:750px) {
+*[class=3D"ShowHero72"] {
+width: 100% !important;
+height: auto !important;
+max-height: 370px !important;
+display: block !important;
+overflow: Hidden !important;
+}
+*[class=3D"HideForMobile"] {
+display: none !important;
+}
+}
+/* /\/\/\/\/\/\/\/\/ Wrapper /\/\/\/\/\/\/\/\/ */
+@media only screen and (max-width:600px) {
+/* BEGIN US Desktop App Banner | added 20150805 Doug */
+*[class=3D"aTopPadAPP"] {
+padding-top: 5px !important;
+}
+*[class=3D"RwAppBannerWidth255"] {
+width: 255px !important;
+}
+*[class=3D"RwAppBannerWidth268"] {
+width: 268px !important;
+}
+/* END US Desktop App Banner */
+/* Added for CitiCard Banner - 20151118 Adam Brown */
+/**[class=3D"ShowHero"] {
+width: 100% !important;
+height: auto !important;
+max-height: 350px !important;
+display: block !important;
+overflow: Hidden !important;
+}*/
+/* End CitiCard Banner */
+*[class=3D"Split"] {
+float: left !important;
+width: 100% !important;
+}
+*[class=3D"Phone"] {
+padding-left: 10px !important;
+padding-right: 10px !important;
+padding-bottom: 15px;
+}
+*[class=3D"SplitPhoneTagline"] {
+float: left !important;
+width: 100% !important;
+padding-left: 0px !important;
+padding-right: 0px !important;
+padding-top: 2px !important;
+text-align: center !important;
+}
+*[class=3D"logo_split"] {
+float: left !important;
+width: 100% !important;
+padding-left: 0px !important;
+}
+*[class=3D"SplitExLogo"] {
+float: left !important;
+width: 100% !important;
+margin: auto;
+}
+*[class=3D"LoyaltyMobl"] {
+text-align: center !important;
+width: 100%;
+margin: auto;
+}
+body {
+margin: 0;
+padding: 0;
+min-width: 100% !important;
+font-family: Arial, Helvetica, sans-serif;
+}
+table[id=3D"wrapper"] {
+width: 100% !important;
+overflow: hidden;
+}
+table[class=3D"wrapper"] {
+width: 100% !important;
+overflow: hidden;
+}
+table[class=3D"w125"] {
+width: 125px !important;
+float: left !important;
+}
+table[class=3D"w150"] {
+width: 140px !important;
+}
+table[class=3D"hide"], td[class=3D"hide"], a[class=3D"hide"], img[class=3D"=
+hide"] {
+display: none !important;
+}
+table[class=3D"cta"] {
+width: 100% !important;
+}
+table[class=3D"RWM"] {
+float: left !important;
+}
+/*For RWM module - US */
+td[class=3D"clear"] {
+float: left !important;
+clear: both !important;
+width: 100% !important;
+}
+td[class=3D"clear_header"] {
+float: left !important;
+clear: both !important;
+width: 100% !important;
+padding-bottom: 10px !important;
+padding-top: 0px !important;
+}
+td[class=3D"social"] {
+float: left !important;
+}
+/*social footer */
+td[class=3D"RWM"] {
+float: left !important;
+}
+/*For RWM module - US */
+td[class=3D"RWM_Padding"] {
+float: left !important;
+padding-top: 0px !important;
+}
+/*For RWM module - US */
+td[class=3D"countdown"] {
+padding-bottom: 0px !important;
+}
+td[class=3D"body14"] {
+font-size: 14px !important;
+}
+td[class=3D"body16"] {
+font-size: 16px !important;
+}
+td[class=3D"bg"] {
+background: #00355f !important;
+}
+/* /\/\/\/\/\/\/\/\/ Wrapper /\/\/\/\/\/\/\/\/ */
+*[class=3D"Header240Split"] {
+margin: auto;
+width: 240px !important;
+}
+*[class=3D"SplitRFDBanner"] {
+float: left !important;
+width: 100% !important;
+padding-right: 0px !important;
+padding-left: 0px !important;
+}
+*[class=3D"SplitRFDText"] {
+text-align: center !important;
+}
+*[class=3D"SplitRFDBanner2"] {
+float: left !important;
+width: 100% !important;
+padding-top: 15px !important;
+text-align: center !important;
+vertical-align: bottom !important;
+}
+*[class=3D"MblBanner"] {
+width: 300px !important;
+}
+*[class=3D"aBtmPad"] {
+padding-bottom: 20px !important;
+}
+*[class=3D"aTopPad"] {
+padding-top: 20px !important;
+}
+*[class=3D"SplitForASAP"] {
+float: left !important;
+width: 100% !important;
+text-align: center !important;
+position: relative !important;
+padding: 1px !important;
+}
+*[class=3D"RmvAddPad"] {
+padding-right: 15px !important;
+padding-left: 10px !important;
+padding-top: 35px !important;
+}
+*[class=3D"FullBG2ColwBGRight"] {
+width: 100% !important;
+padding-bottom: 35px;
+background-image: url(https://images.trvl-media.com/media/content/expus/ema=
+il/2016/ETM/Hero_FareSale4_600x225.jpg);
+background-repeat: no-repeat;
+background-position: top left;
+}
+*[class=3D"SplitASAPTagline"] {
+float: left !important;
+width: 100% !important;
+padding-top: 5px;
+text-align: center !important;
+}
+*[class=3D"DealFinder"] {
+text-align: center !important;
+padding-top: 10px;
+width: 300px;
+margin: auto;
+}
+*[class=3D"Header280Split"] {
+margin: auto;
+width: 280px !important;
+}
+*[id=3D"BgImageSwitch1"] {
+background-image: url(https://images.trvl-media.com/media/content/expus/ema=
+il/2016/ETM/STOR-10287_img_300_150_02.jpg);
+background-repeat: no-repeat;
+background-position: 20% 0%;
+}
+*[class=3D"SplitCard"] {
+float: left !important;
+width: 100% !important;
+padding-right: 0px !important;
+padding-left: 0px !important;
+text-align: center !important;
+}
+/* /\/\/\/\/\/\/\/\/ Generic /\/\/\/\/\/\/\/\/ */
+a[class=3D"msg"] {
+font-size: 13px !important;
+font-weight: bold !important;
+}
+a[class=3D"cta"] {
+font-size: 16px !important;
+font-weight: bold !important;
+}
+a[class=3D"hdr"] {
+font-size: 22px !important;
+font-weight: bold !important;
+}
+a[class=3D"prc"] {
+font-size: 24px !important;
+font-weight: bold !important;
+}
+.alr a {
+color: #6b6b6b;
+text-decoration: none;
+}
+img[class=3D"flx"] {
+width: 100% !important;
+height: auto !important;
+line-height: normal !important;
+}
+img[class=3D"plogo"] {
+width: 100% !important;
+height: auto !important;
+line-height: normal !important;
+}
+img[class=3D"logo_loy"] {
+max-width: 180px !important;
+height: auto !important;
+display: block !important;
+overflow: hidden !important;
+}
+img[class=3D"logo"] {
+max-width: 180px !important;
+height: auto !important;
+display: block !important;
+overflow: hidden !important;
+width: 110px !important;
+}
+img[class=3D"partner"] {
+height: auto !important;
+display: block !important;
+overflow: hidden !important;
+max-width: 120px !important;
+}
+div[class=3D"swap2"] {
+width: 100% !important;
+height: auto !important;
+max-height: 156px !important;
+display: block !important;
+overflow: hidden !important;
+}
+/* mobile version image replacement - please remember to adjust the max-hei=
+ght based on the image height and add +10px - eg. if image height 156 - max=
+-height should be 166px*/
+span[class=3D"hdr"] {
+font-size: 18px !important;
+font-weight: bold !important;
+}
+span[class=3D"newhdr"] {
+font-size: 14px !important;
+font-weight: bold !important;
+}
+/* MesoBanner */
+*[class=3D"SplitMeso"] {
+float: left !important;
+width: 100% !important;
+padding-left: 0px !important;
+padding-right: 0px !important;
+}
+/* /\/\/\/\/\/\/\/\/ Generic /\/\/\/\/\/\/\/\/ */
+/* Mobile Download Banner*/
+*[class=3D"divsize"] {
+display: block !important;
+width: 35px !important;
+height: 20px !important;
+}
+*[class=3D"ShowMblDwnlTopClr"] {
+background-color: #ffcb00;
+}
+*[class=3D"ShowMblDwnlTop"] {
+background-image: url(https://images.trvl-media.com/media/content/expus/ema=
+il/2016/ETM/GW_Images/Banner_ExpediaApp_US_Y_320x46.jpg);
+width: 320px !important;
+height: 46px !important;
+max-height: 46px !important;
+margin: auto;
+clear: both;
+display: block !important;
+float: left !important;
+}
+*[class=3D"mblDwnl2"] {
+width: 100px !important;
+height: 30px !important;
+float: right;
+display: block !important;
+border: 0 !important;
+margin-top: 11px;
+margin-right: 5px;
+}
+*[class=3D"mblDwnl3"] {
+width: 85px !important;
+height: 30px !important;
+float: right;
+display: block !important;
+border: 0 !important;
+margin-top: 11px;
+margin-right: 6px;
+}
+*[class=3D"mblDwnlText"] {
+width: 115px !important;
+height: 30px !important;
+float: left;
+display: block !important;
+border: 0 !important;
+margin-top: 11px;
+margin-right: 6px;
+}
+/* Mobile Download Banner*/
+/* Additional Mobile Download Banner*/
+*[class=3D"ShowMblDwnla"] {
+width: 276px !important;
+background-color: #ffcb00 !important;
+height: 69px !important;
+margin-top: 0px;
+margin-right: auto;
+margin-bottom: 17px;
+margin-left: auto;
+clear: both;
+display: block !important;
+max-height: 69px !important;
+overflow: visible !important;
+}
+*[class=3D"mblDwnl01a"] {
+width: 100% !important;
+height: 15px !important;
+display: block !important;
+border: 0 !important;
+margin-top: 10px;
+text-align: center !important;
+font-size: 12px !important;
+line-height: 12px !important;
+font-family: Arial, Helvetica, sans-serif !important;
+color: #000000 !important;
+visibility: visible !important;
+}
+*[class=3D"mblDwnl2a"] {
+float: left;
+display: block !important;
+border: 0 !important;
+margin-top: 05px;
+margin-left: 0px !important;
+overflow: visible !important;
+}
+*[class=3D"mblDwnl3a"] {
+float: right;
+display: block !important;
+border: 0 !important;
+margin-top: 05px;
+margin-right: 0px !important;
+overflow: visible !important;
+}
+*[class=3D"imageblocka"] {
+display: block !important;
+overflow: visible !important;
+}
+*[class=3D"mblDwnloffera"] {
+width: 100% !important;
+height: 18px !important;
+float: none;
+display: block !important;
+border: 0 !important;
+padding-top: 7px !important;
+margin-bottom: 0px !important;
+text-align: center !important;
+overflow: visible !important;
+line-height: 15px !important;
+font-size: 12px !important;
+max-height: 15px !important;
+}
+/* Additional Mobile Download Banner*/
+td[class=3D"noclear"] {
+float: left !important;
+}
+td[class=3D"sociala"] {
+float: right !important;
+}
+table[class=3D"w125a"] {
+width: auto !important;
+float: right !important;
+}
+*[class=3D"LoyaltyReg"] {
+text-align: center !important;
+padding-top: 10px;
+width: 195px;
+margin: auto;
+}
+*[class=3D"PartnerPadding"] {
+text-align: center !important;
+padding-top: 0px !important;
+padding-bottom: 0px !important;
+margin: auto;
+max-width: 200px !important;
+vertical-align: middle !important;
+}
+*[class=3D"PartnerPadding1"] {
+text-align: right !important;
+padding-top: 0px !important;
+padding-bottom: 0px !important;
+margin: auto;
+max-width: 140px !important;
+vertical-align: middle !important;
+}
+*[class=3D"alncenter"] {
+width: 252px !important;
+height: auto !important;
+text-align: center !important;
+padding-top: 10px !important;
+}
+*[class=3D"FlexWidth100"] {
+width: 100% !important;
+height: auto !important;
+line-height: normal !important;
+}
+*[class=3D"FlexWidth100HERO"] {
+width: 100% !important;
+min-width: 100% !important;
+height: auto !important;
+line-height: normal !important;
+}
+*[class=3D"TemplatePadding"] {
+padding: 10px !important;
+}
+*[class=3D"MobilePadding10"] {
+padding: 10px !important;
+}
+div[class=3D"swap_banner"] {
+width: 280px !important;
+height: auto !important;
+max-height: auto !important;
+display: block !important;
+overflow: hidden !important;
+padding: 20px 0 !important;
+}
+div[class=3D"swap_banner1"] {
+width: 280px !important;
+height: auto !important;
+max-height: auto !important;
+display: block !important;
+overflow: hidden !important;
+padding: 20px 0 !important;
+float: left;
+}
+*[class=3D"HideAll"] {
+display: none !important;
+}
+*[class=3D"HideForMobile"] {
+display: none !important;
+}
+*[class=3D"LegalPadding"] {
+padding-top: 10px !important;
+padding-bottom: 0px !important;
+padding-left: 10px !important;
+padding-right: 10px !important;
+}
+*[class=3D"swap_logo"] {
+display: block !important;
+width: auto !important;
+max-width: 180px !important;
+overflow: visible !important;
+height: auto !important;
+max-height: inherit !important;
+visibility: visible !important;
+}
+*[class=3D"swap_logo_center"] {
+display: block !important;
+width: 100% !important;
+max-width: auto !important;
+overflow: visible !important;
+height: auto !important;
+max-height: inherit !important;
+visibility: visible !important;
+}
+*[class=3D"clear_header_loy"] {
+float: left !important;
+clear: both !important;
+width: 100% !important;
+padding-bottom: 0px !important;
+padding-top: 10px !important;
+padding-left: 0px !important;
+padding-right: 0px !important;
+}
+*[class=3D"clear_header_loy1"] {
+float: left !important;
+clear: both !important;
+width: 100% !important;
+padding-bottom: 10px !important;
+padding-top: 10px !important;
+padding-left: 0px !important;
+padding-right: 0px !important;
+}
+*[class=3D"ImgResize"] {
+width: 50% !important;
+height: auto !important;
+}
+*[class=3D"headernewlogo"] {
+text-align: center !important;
+margin-left: auto !important;
+margin-right: auto !important;
+}
+/*Module Specific Classes*/
+*[class=3D"rmvLRBPad"] {
+padding-left: 0px !important;
+padding-right: 0px !important;
+padding-bottom: 0px !important;
+}
+*[class=3D"aTopBtmPad"] {
+padding-top: 10px !important;
+padding-bottom: 10px !important;
+}
+*[class=3D"FSTopPad"] {
+padding-top: 28px !important;
+}
+*[class=3D"FSRightPad"] {
+padding-right: 100px !important;
+}
+*[class=3D"2ColwBGRightTop"] {
+width: 100% !important;
+background-image: url(https://images.trvl-media.com/media/content/expus/ema=
+il/2016/ETM/Hero_FareSale_1_111x74.jpg);
+background-repeat: no-repeat;
+background-position: right top;
+background-size: 111px 74px;
+background-color: #00355f !important;
+}
+*[class=3D"2ColwBGRightBtm1"] {
+width: 100% !important;
+background-image: url(https://images.trvl-media.com/media/content/expus/ema=
+il/2016/ETM/Hero_FareSale_2_125x83.jpg);
+background-repeat: no-repeat;
+background-position: right bottom;
+background-size: 111px 74px;
+background-color: #00355F !important;
+}
+*[class=3D"2ColwBGRightBtm2"] {
+width: 100% !important;
+background-image: url(https://images.trvl-media.com/media/content/expus/ema=
+il/2016/ETM/Hero_FareSale4_125x83.jpg);
+background-repeat: no-repeat;
+background-position: right bottom;
+background-size: 111px 74px;
+background-color: #00355F !important;
+}
+/* reduceLR20Pad, Split2ColNL, FlexHide400 added - update lizz dec 4, from =
+CZ redesign style tag */
+*[class=3D"reduceLR20Pad"] {
+padding-left: 20px !important;
+padding-right: 20px !important;
+}
+*[class=3D"Split2ColNL"]{
+float: left !important;
+width: 100% !important;
+padding-left: 0px !important;
+padding-right: 0px !important;
+}
+*[class=3D"FlexHide400"]{
+width: 100% !important;
+min-width: 100% !important;
+height: auto!important;
+line-height: normal!important;
+}
+*[class=3D"BorderLeftNav"] {
+border-left: 1px solid #d8d8d8;
+}
+}
+@media only screen and (max-width:414px) {
+/*Primary Classes*/
+*[class=3D"Hide400"] {
+display: none !important;
+}
+*[class=3D"HideForMobile"] {
+display: none !important;
+}
+*[class=3D"TemplatePadding"] {
+padding: 10px !important;
+}
+*[class=3D"Phone"] {
+padding-left: 12px !important;
+padding-bottom: 15px;
+}
+/*Module Specific Classes*/
+*[class=3D"ShowHero"] {
+width: 100% !important;
+height: auto !important;
+max-height: 350px !important;
+display: block !important;
+overflow: Hidden !important;
+}
+*[class=3D"ShowHero72"] {
+width: 100% !important;
+height: auto !important;
+max-height: 370px !important;
+display: block !important;
+overflow: Hidden !important;
+}
+*[class=3D"SplitRFDBanner"] {
+float: left !important;
+width: 100% !important;
+padding-right: 0px !important;
+padding-left: 0px !important;
+}
+*[class=3D"SplitRFDText"] {
+text-align: center !important;
+}
+*[class=3D"SplitRFDBanner2"] {
+float: left !important;
+width: 100% !important;
+padding-top: 15px !important;
+text-align: center !important;
+vertical-align: bottom !important;
+}
+*[class=3D"SplitCardText"] {
+float: left !important;
+text-align: left !important;
+width: 100% !important;
+padding-right: 5px !important;
+padding-left: 5px !important;
+}
+*[class=3D"SplitForASAP"] {
+float: left !important;
+width: 100% !important;
+text-align: center !important;
+position: relative !important;
+padding: 1px !important;
+}
+*[class=3D"Split400"] {
+float: left !important;
+width: 100% !important;
+}
+*[class=3D"FullBG2ColwBGRight"] {
+width: 100% !important;
+background-image: url(https://images.trvl-media.com/media/content/expus/ema=
+il/2016/ETM/Hero_FareSale4_400x300.jpg);
+background-repeat: no-repeat;
+background-position: top left;
+}
+*[class=3D"24Banner"] {
+width: 100% !important;
+height: auto !important;
+}
+*[class=3D"Header240Split"] {
+margin: auto;
+width: 240px !important;
+}
+*[class=3D"MblBanner"] {
+width: 300px !important;
+}
+*[class=3D"aBtmPad"] {
+padding-bottom: 20px !important;
+}
+*[class=3D"TxtResize30"] {
+font-size: 30px !important;
+}
+*[class=3D"TxtResize28"] {
+font-size: 28px !important;
+}
+*[class=3D"TxtResize26"] {
+font-size: 26px !important;
+}
+*[class=3D"TxtResize24"] {
+font-size: 24px !important;
+}
+*[class=3D"TxtResize22"] {
+font-size: 22px !important;
+}
+*[class=3D"TxtResize20"] {
+font-size: 20px !important;
+}
+*[class=3D"TxtResize18"] {
+font-size: 18px !important;
+}
+*[class=3D"TxtResize16"] {
+font-size: 16px !important;
+}
+*[class=3D"TxtResize14"] {
+font-size: 14px !important;
+}
+/* ShowHeroNL and FlexHide400 added - update lizz dec 4, from CZ redesign s=
+tyle tag */
+*[class=3D"ShowHeroNL"]{width:100% !important; height:auto !important; max-=
+height:350px!important; display:block !important; overflow:Hidden !importan=
+t;}
+*[class=3D"FlexHide400"]{display:none !important;}
+}
+@media only screen and (max-width:300px) {
+/*Primary Classes*/
+*[class=3D"Hide300"] {
+display: none !important;
+}
+}
+*[class=3D"alr"] {
+font-size: 11px !important;
+}
+/* /\/\/\/\/\/\/\/\/ Mobile Styles /\/\/\/\/\/\/\/\/ */
+</style>
+<!-- MG Tracking -->
+<img src=3D"http://link.expediamail.com/o/3/TmpReE1qWXlPREU6TURJdFl6RTVNVE0=
+xTFRZeE1USmlORFpoTW1RNU9EUmxOR0U0TW1Vek1qRTBPR0psWmpCaVpUWTA6Y21Ga2RTNWxlSE=
+JsWkdsaFFHOW9iV2t1YjNKbjpWVk11VUZRdVJWWkZUbFJVVWtsSFIwVlNSVVJOUVVsTVNVNUhMa=
+1ZPVTFCVlVrTklRVk5GUTA5T1JrbFNUVUZVU1U5T0xrWk1TVWRJVkNaRlRVeEVWRXc5UkVGVVJU=
+SXdNVGt3TlRFMUxVbFRVMVZZTGxOSlJGZ3VTMFZaT1RRd09EVXlNRGszTnpJdVVFRkpSRmd1VEV=
+GT1IwVk9YMVZUTGsxRFNVUllMbFJGVTFRMExsWkZVbE5ZTGsxSlJGTXhMVEkxTnprelh6SXRNam=
+syT0RKZk15MHpNREUwTUY4MExUTXdNVFF6WHpVdE1qazNNalZmTmkwek1ERXpObDgzTFRNd01UT=
+TM/VjmPWyBFTB6eCmxMrEzsBQ" width=3D"1" height=3D"1" />
+</head>
+<body style=3D"padding:0px 0px 0px 0px;" class=3D"FullWidthHtmlBody" leftma=
+rgin=3D"0" topmargin=3D"0" marginheight=3D"0" bgcolor=3D"#ededed">
+<div style=3D"display:none;max-height:0px;max-width:0px;line-height:1px;fon=
+t-size:1px;color:#ffffff;opacity:0;overflow:hidden"><a href=3D"http://link.=
+expediamail.com/c/4/?T=3DNjQxMjYyODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4=
+MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5leHBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR=
+0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIw=
+MTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlR=
+FU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi=
+0zMDEzNl83LTMwMTM3%3AZmFsc2U%3A%3A%3AaHR0cHM6Ly93d3cuZXhwZWRpYS5jb20vcC9pbm=
+ZvLW90aGVyL2d1YXJhbnRlZXM_bGFuZ2lkPTEwMzMmRU1MQ0lEPVVTLlBULkVWRU5UVFJJR0dFU=
+kVETUFJTElORy5FTlNQVVJDSEFTRUNPTkZJUk1BVElPTi5GTElHSFQmRU1MRFRMPURBVEUyMDE5=
+MDUxNS1JU1NVWC5TSURYLktFWTk0MDg1MjA5NzcyLlBBSURYLkxBTkdFTl9VUy5NQ0lEWC5URVN=
+UNC5WRVJTWC5NSURTMS0yNTc5M18yLTI5NjgyXzMtMzAxNDBfNC0zMDE0M181LTI5NzI1XzYtMz=
+AxMzZfNy0zMDEzNw&K=3Dz5677koWG6kox8nZd3j2tg">Thank you for your booking</a>=
+</div> <table align=3D"center" bgcolor=3D"#ededed" width=3D"100%" border=3D=
+"0" cellspacing=3D"0" cellpadding=3D"0" >
+<tr>
+<td align=3D"center" style=3D"padding:0px 0px 0px 0px;">
+<table align=3D"center" width=3D"600" border=3D"0" cellspacing=3D"0" cellpa=
+dding=3D"0" style=3D"min-width:600px;" class=3D"FlexWidth100HERO">
+<tr>
+<td align=3D"center" style=3D"padding:5px 0px 0px 0px; overflow:hidden; bor=
+der-top:2px solid #ffcb00;" bgcolor=3D"#FFFFFF" >
+<table align=3D"center" width=3D"560" border=3D"0" cellspacing=3D"0" cellpa=
+dding=3D"0" class=3D"RwAppBannerWidth268" >
+<tr>
+<!-- For non loyalty members -->
+<td align=3D"center" valign=3D"middle" style=3D"padding: 0px 0px 0px 0px;" =
+class=3D"Split">
+<table align=3D"left" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" clas=
+s=3D"LoyaltyMobl" >
+<tr>
+<td width=3D"118" align=3D"center" valign=3D"middle" style=3D"padding: 0px =
+0px 5px 0px;">
+<a alias=3D"1.0_1033_Logo_en_US" href=3D"http://link.expediamail.com/c/4/?T=
+=3DNjQxMjYyODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3=
+AcmFkdS5leHBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1B=
+VUkNIQVNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRF=
+guS0VZOTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxL=
+TI1NzkzXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZ=
+mFsc2U%3A%3A%3AaHR0cHM6Ly93d3cuZXhwZWRpYS5jb20vP2xhbmdpZD0xMDMzJkVNTENJRD1V=
+Uy5QVC5FVkVOVFRSSUdHRVJFRE1BSUxJTkcuRU5TUFVSQ0hBU0VDT05GSVJNQVRJT04uRkxJR0h=
+UJkVNTERUTD1EQVRFMjAxOTA1MTUtSVNTVVguU0lEWC5LRVk5NDA4NTIwOTc3Mi5QQUlEWC5MQU=
+5HRU5fVVMuTUNJRFguVEVTVDQuVkVSU1guTUlEUzEtMjU3OTNfMi0yOTY4Ml8zLTMwMTQwXzQtM=
+zAxNDNfNS0yOTcyNV82LTMwMTM2XzctMzAxMzc&K=3D3hzoztJPRYq1ZcAxqZU2yA" target=
+=3D"_blank">
+<img src=3D"https://images.trvl-media.com/media/content/expus/email/wrapper=
+/expedialogo/expedia_us_103x30.jpg" width=3D"118" alt=3D"Expedia.com" borde=
+r=3D"0" style=3D"font-family: Helvetica, Arial, sans-serif; font-size:15px;=
+ color:#083360; display:block; -ms-interpolation-mode: bicubic; "/>
+</a>
+</td>
+</tr>
+</table>
+</td>
+<td bgcolor=3D"#FFFFFF" class=3D"clear" align=3D"right" valign=3D"middle" s=
+tyle=3D"font-family:Arial;font-size:12px; line-height:1.2em; color:#6B6B6B;=
+ padding: 0px 0px 0px 0px;">
+<!-- ####### Start: RewardsRecModule ####### -->
+<!-- alias_RWM: 1.0_1033__RWM .......... alias: 1.0_1033_ -->
+<!-- ************** Rewards Recognition Module ************** -->
+<!--/\/\-------- Expedia logo & NON member message --------/\/\-->
+<table align=3D"right" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" wid=
+th=3D"100%">
+<tr>
+<td width=3D"50%" class=3D"Split" align=3D"center" valign=3D"middle" style=
+=3D"padding: 0px 0px 0px 0px;">
+<table width=3D"100%" align=3D"center" border=3D"0" cellpadding=3D"0" cells=
+pacing=3D"0">
+<tr>
+<td align=3D"right" width=3D"100%" valign=3D"top" style=3D"font-family: Hel=
+vetica, Arial, sans-serif; font-size:11px; color:#6b6b6b; line-height:115%;=
+ padding: 5px 0px 5px 0px;" class=3D"SplitRFDText">Earn Rewards for your tr=
+avel.
+<a alias=3D"" href=3D"http://link.expediamail.com/c/4/?T=3DNjQxMjYyODE%3AMD=
+ItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5leHBlZGlhQG=
+9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORklSTU=
+FUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODUyMDk3N=
+zIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2ODJf=
+My0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2U%3A%3A%3AaHR0=
+cHM6Ly93d3cuZXhwZWRpYS5jb20vcmV3YXJkcy9ob3dpdHdvcmtzP2xhbmdpZD0xMDMzJkVNTEN=
+JRD1VUy5QVC5FVkVOVFRSSUdHRVJFRE1BSUxJTkcuRU5TUFVSQ0hBU0VDT05GSVJNQVRJT04uRk=
+xJR0hUJkVNTERUTD1EQVRFMjAxOTA1MTUtSVNTVVguU0lEWC5LRVk5NDA4NTIwOTc3Mi5QQUlEW=
+C5MQU5HRU5fVVMuTUNJRFguVEVTVDQuVkVSU1guTUlEUzEtMjU3OTNfMi0yOTY4Ml8zLTMwMTQw=
+XzQtMzAxNDNfNS0yOTcyNV82LTMwMTM2XzctMzAxMzc&K=3DyJJtAdYnjECnqe2mxs6HOg" sty=
+le=3D"font-family: Helvetica, Arial, sans-serif; font-size:11px; color:#006=
+5b8; text-decoration:underline;" target=3D"_blank">Learn More</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<!--/\/\-------- END Expedia logo & NON member message --------/\/\-->
+<!-- ************** END Rewards Recognition Module ************** -->
+<!-- ######## End: RewardsRecModule ######## -->
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--/\/\-------- Nav Bar --------/\/\-->
+<tr>
+<td align=3D"center" style=3D"padding:0px 0px 0px 0px;">
+<!-- ####### Start: Nav Links ####### -->
+<table align=3D"center" bgcolor=3D"#F5F5F5" width=3D"100%" border=3D"0" cel=
+lspacing=3D"0" cellpadding=3D"0" style=3D"padding: 0px 0px 0px 0px;">
+<tr>
+<td align=3D"center" bgcolor=3D"#FFFFFF" width=3D"100%" valign=3D"top" styl=
+e=3D"border-bottom:1px solid #c7c7c7; padding:0px 0px 0px 0px; ">
+<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0">
+<tr>
+<td align=3D"center" valign=3D"top" style=3D" padding:5px 7px 5px 7px; "> <=
+a alias=3D"NavFliHot_en_US" href=3D"http://link.expediamail.com/c/4/?T=3DNj=
+QxMjYyODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFk=
+dS5leHBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNI=
+QVNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0V=
+ZOTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1Nz=
+kzXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2=
+U%3A%3A%3AaHR0cHM6Ly93d3cuZXhwZWRpYS5jb20vVmFjYXRpb24tUGFja2FnZXM_bGFuZ2lkP=
+TEwMzMmRU1MQ0lEPVVTLlBULkVWRU5UVFJJR0dFUkVETUFJTElORy5FTlNQVVJDSEFTRUNPTkZJ=
+Uk1BVElPTi5GTElHSFQmRU1MRFRMPURBVEUyMDE5MDUxNS1JU1NVWC5TSURYLktFWTk0MDg1MjA=
+5NzcyLlBBSURYLkxBTkdFTl9VUy5NQ0lEWC5URVNUNC5WRVJTWC5NSURTMS0yNTc5M18yLTI5Nj=
+gyXzMtMzAxNDBfNC0zMDE0M181LTI5NzI1XzYtMzAxMzZfNy0zMDEzNw&K=3DBhOxFazihQMP9P=
+5C1aaakw" style=3D"font-family:Arial, Helvetica, sans-serif; color:#0065b8;=
+ font-size:11px; text-decoration:none;"> <span style=3D"color:#0065b8;">Pac=
+kages</span></a></td>
+<td align=3D"center" valign=3D"top" style=3D" padding:5px 7px 5px 7px; "> <=
+a alias=3D"NavHotels_en_US" href=3D"http://link.expediamail.com/c/4/?T=3DNj=
+QxMjYyODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFk=
+dS5leHBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNI=
+QVNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0V=
+ZOTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1Nz=
+kzXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2=
+U%3A%3A%3AaHR0cHM6Ly93d3cuZXhwZWRpYS5jb20vSG90ZWxzP2xhbmdpZD0xMDMzJkVNTENJR=
+D1VUy5QVC5FVkVOVFRSSUdHRVJFRE1BSUxJTkcuRU5TUFVSQ0hBU0VDT05GSVJNQVRJT04uRkxJ=
+R0hUJkVNTERUTD1EQVRFMjAxOTA1MTUtSVNTVVguU0lEWC5LRVk5NDA4NTIwOTc3Mi5QQUlEWC5=
+MQU5HRU5fVVMuTUNJRFguVEVTVDQuVkVSU1guTUlEUzEtMjU3OTNfMi0yOTY4Ml8zLTMwMTQwXz=
+QtMzAxNDNfNS0yOTcyNV82LTMwMTM2XzctMzAxMzc&K=3DRjUTo19Jpj1v_WMCBWaBAg" style=
+=3D"font-family:Arial, Helvetica, sans-serif; color:#0065b8; font-size:11px=
+; text-decoration:none;"> <span style=3D"color:#0065b8;">Hotels</span></a><=
+/td>
+<td class=3D"hide" align=3D"center" valign=3D"top" style=3D" padding:5px 7p=
+x 5px 7px; "><a alias=3D"NavCar_en_US" href=3D"http://link.expediamail.com/=
+c/4/?T=3DNjQxMjYyODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBi=
+ZTY0%3AcmFkdS5leHBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HL=
+kVOU1BVUkNIQVNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VY=
+LlNJRFguS0VZOTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1=
+JRFMxLTI1NzkzXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMT=
+M3%3AZmFsc2U%3A%3A%3AaHR0cHM6Ly93d3cuZXhwZWRpYS5jb20vQ2Fycz9sYW5naWQ9MTAzMy=
+ZFTUxDSUQ9VVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORklSTUFUS=
+U9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODUyMDk3NzIu=
+UEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2ODJfMy0=
+zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3&K=3DjNcUtTWBi3vfGXUzsmRua=
+A" style=3D"font-family:Arial, Helvetica, sans-serif; color:#0065b8; font-s=
+ize:11px; text-decoration:none;"> <span style=3D"color:#0065b8;">Cars</span=
+></a></td>
+<td align=3D"center" valign=3D"top" style=3D" padding:5px 7px 5px 7px; "><a=
+ alias=3D"NavFlights_en_US" href=3D"http://link.expediamail.com/c/4/?T=3DNj=
+QxMjYyODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFk=
+dS5leHBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNI=
+QVNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0V=
+ZOTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1Nz=
+kzXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2=
+U%3A%3A%3AaHR0cHM6Ly93d3cuZXhwZWRpYS5jb20vRmxpZ2h0cz9sYW5naWQ9MTAzMyZFTUxDS=
+UQ9VVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORklSTUFUSU9OLkZM=
+SUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODUyMDk3NzIuUEFJRFg=
+uTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2ODJfMy0zMDE0MF=
+80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3&K=3Dfj3xkzWccTBkDspiwUvvYw" styl=
+e=3D"font-family:Arial, Helvetica, sans-serif; color:#0065b8; font-size:11p=
+x; text-decoration:none;"> <span style=3D"color:#0065b8;">Flights</span></a=
+></td>
+<td align=3D"center" valign=3D"top" style=3D" padding:5px 7px 5px 7px; "><a=
+ alias=3D"NavCruise_en_US" href=3D"http://link.expediamail.com/c/4/?T=3DNjQ=
+xMjYyODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkd=
+S5leHBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQ=
+VNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZ=
+OTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1Nzk=
+zXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2U=
+%3A%3A%3AaHR0cHM6Ly93d3cuZXhwZWRpYS5jb20vQ3J1aXNlcz9sYW5naWQ9MTAzMyZFTUxDSU=
+Q9VVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORklSTUFUSU9OLkZMS=
+UdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODUyMDk3NzIuUEFJRFgu=
+TEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2ODJfMy0zMDE0MF8=
+0LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3&K=3DaFfNfUlK0x0DZTa61Pra_Q" style=
+=3D"font-family:Arial, Helvetica, sans-serif; color:#0065b8; font-size:11px=
+; text-decoration:none;"> <span style=3D"color:#0065b8;">Cruises</span></a>=
+</td>
+<td class=3D"hide" nowrap=3D"nowrap" align=3D"center" valign=3D"top" style=
+=3D" padding:5px 7px 5px 7px; "><a alias=3D"NavActivities_en_US" href=3D"ht=
+tp://link.expediamail.com/c/4/?T=3DNjQxMjYyODE%3AMDItYzE5MTM1LTYxMTJiNDZhMm=
+Q5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5leHBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZ=
+FTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVE=
+w9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTL=
+k1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUt=
+Mjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2U%3A%3A%3AaHR0cHM6Ly93d3cuZXhwZWRpYS5j=
+b20vQWN0aXZpdGllcz9sYW5naWQ9MTAzMyZFTUxDSUQ9VVMuUFQuRVZFTlRUUklHR0VSRURNQUl=
+MSU5HLkVOU1BVUkNIQVNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LU=
+lTU1VYLlNJRFguS0VZOTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFU=
+lNYLk1JRFMxLTI1NzkzXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83=
+LTMwMTM3&K=3Dy21IcpR4FPRJrQV1YToe6A" style=3D"font-family:Arial, Helvetica,=
+ sans-serif; color:#0065b8; font-size:11px; text-decoration:none;"> <span s=
+tyle=3D"color:#0065b8;">Things to Do</span></a></td>
+<td bgcolor=3D"#fff" class=3D"hide" nowrap=3D"nowrap" align=3D"center" vali=
+gn=3D"top" style=3D" padding:5px 7px 5px 7px; "><a alias=3D"NavDeals_en_US"=
+ href=3D"http://link.expediamail.com/c/4/?T=3DNjQxMjYyODE%3AMDItYzE5MTM1LTY=
+xMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5leHBlZGlhQG9obWkub3Jn%3A=
+VVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORklSTUFUSU9OLkZMSUd=
+IVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODUyMDk3NzIuUEFJRFguTE=
+FOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2ODJfMy0zMDE0MF80L=
+TMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2U%3A%3A%3AaHR0cHM6Ly93d3cuZ=
+XhwZWRpYS5jb20vRGVhbHM_bGFuZ2lkPTEwMzMmRU1MQ0lEPVVTLlBULkVWRU5UVFJJR0dFUkVE=
+TUFJTElORy5FTlNQVVJDSEFTRUNPTkZJUk1BVElPTi5GTElHSFQmRU1MRFRMPURBVEUyMDE5MDU=
+xNS1JU1NVWC5TSURYLktFWTk0MDg1MjA5NzcyLlBBSURYLkxBTkdFTl9VUy5NQ0lEWC5URVNUNC=
+5WRVJTWC5NSURTMS0yNTc5M18yLTI5NjgyXzMtMzAxNDBfNC0zMDE0M181LTI5NzI1XzYtMzAxM=
+zZfNy0zMDEzNw&K=3DjpOIYjjVYKSTUnWozm9p8w" style=3D"font-family:Arial, Helve=
+tica, sans-serif; color:#0065b8; font-size:11px; text-decoration:none;"> <s=
+pan style=3D"color: #0065b8;">Deals</span></a></td>
+<td class=3D"hide" nowrap=3D"nowrap" align=3D"center" valign=3D"top" style=
+=3D" padding:5px 7px 5px 7px; "><a alias=3D"NavRewards_en_US" href=3D"http:=
+//link.expediamail.com/c/4/?T=3DNjQxMjYyODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5O=
+DRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5leHBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTl=
+RUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9R=
+EFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1D=
+SURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk=
+3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2U%3A%3A%3AaHR0cHM6Ly93d3cuZXhwZWRpYS5jb20=
+vdXNlci9leHBlZGlhcmV3YXJkcz9sYW5naWQ9MTAzMyZFTUxDSUQ9VVMuUFQuRVZFTlRUUklHR0=
+VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwM=
+TkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRF=
+U1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0=
+zMDEzNl83LTMwMTM3&K=3DEgew9SLxmntkLjcy0Qy8Qg" style=3D"font-family:Arial, H=
+elvetica, sans-serif; color:#0065b8; font-size:11px; text-decoration:none;"=
+> <span style=3D"color:#0065b8;">Rewards</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<!-- ######## End: Nav Links ######## -->
+</td>
+</tr>
+<!--/\/\-------- End Nav Bar --------/\/\-->
+<!--/\/\-------- Email Body --------/\/\-->
+<tr>
+<td style=3D"padding:0px 0px 0px 0px;">
+<table id=3D"Email-Module-Container" width=3D"100%" cellspacing=3D"0" cellp=
+adding=3D"0" border=3D"0">
+<tr>
+<td id=3D"campaignBody" bgcolor=3D"#FFFFFF" align=3D"center" valign=3D"midd=
+le" style=3D"padding:0px 0px 0px 0px;">
+<!-- ....... START SINGLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D""
+style=3D"padding:16px 16px 16px 16px; border-right: none; border-left: none=
+; border-top: none; border-bottom: none; border-radius:0px 0px 0px 0px; -we=
+bkit-border-radius:0px 0px 0px 0px;-moz-border-radius:0px 0px 0px 0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D START 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D -->
+<!-- ....... START SINGLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#465280" align=3D"" valign=3D""
+style=3D"padding:20px 20px 20px 20px; border-right: none; border-left: none=
+; border-top: none; border-bottom: none; border-radius:8px 8px 8px 8px; -we=
+bkit-border-radius:8px 8px 8px 8px;-moz-border-radius:8px 8px 8px 8px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D START 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D -->
+<!-- ....... START DOUBLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#465280" align=3D"" valign=3D"top"
+style=3D"padding:0px 0px 0px 0px; border-right: none; border-left: none; bo=
+rder-top: none; border-bottom: none; border-radius:0px 0px 0px 0px;"
+class=3D"">
+<table bgcolor=3D"#465280" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<tr><!-- =3D=3D=3D=3D=3D START Left Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#465280" class=3D"" style=3D"padding:0px 0px 0px 0px;" align=
+=3D""
+valign=3D"middle" width=3D"30">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT LEFT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Image *=3D*=3D*=3D* --><tr><td bgcolor=3D"#465=
+280" align=3D"left" valign=3D"middle" style=3D"padding:0px 0px 0px 0px;"><a=
+ alias=3D"Image" href=3D"http://link.expediamail.com/c/4/?T=3DNjQxMjYyODE%3=
+AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5leHBlZGl=
+hQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORkl=
+STUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODUyMD=
+k3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2O=
+DJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2U%3A%3A%3AP=
+HZhcmlhYmxlIGNvbm5lY3Rpb25JRD0iMSIgdGFibGVOYW1lPSJ0cmF2ZWxlcnMiIGNvbHVtbk5h=
+bWU9ImRvbWFpbl9zdCIgdmFsdWU9IltEb21haW4gU3RdIi8-P0VNTENJRD1VUy5QVC5FVkVOVFR=
+SSUdHRVJFRE1BSUxJTkcuRU5TUFVSQ0hBU0VDT05GSVJNQVRJT04uRkxJR0hUJkVNTERUTD1EQV=
+RFMjAxOTA1MTUtSVNTVVguU0lEWC5LRVk5NDA4NTIwOTc3Mi5QQUlEWC5MQU5HRU5fVVMuTUNJR=
+FguVEVTVDQuVkVSU1guTUlEUzEtMjU3OTNfMi0yOTY4Ml8zLTMwMTQwXzQtMzAxNDNfNS0yOTcy=
+NV82LTMwMTM2XzctMzAxMzcuTU9EOTcwLTM3LTEtMC1FTUFJTC1IRVJPLUVOLVVTX1MyLVA0X1B=
+PUzBfSU1HNTY&K=3DdWY_8ZiBhpBbB92Uzdx6YA" target=3D"_blank"><img src=3D"http=
+s://cdn.lemediavault.com/images/07882ef832155431dda1a289eff4af36.png" alt=
+=3D"Alt" style=3D"display:block;" width=3D"20" height=3D"auto" border=3D"0"=
+ class=3D""></a></td></tr><!-- *=3D*=3D*=3D* END CB: Image *=3D*=3D*=3D* --=
+>
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Left Content =3D=3D=3D=3D=3D=3D --><!-- =
+=3D=3D=3D=3D=3D START Right Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#465280" class=3D"" style=3D"padding:0px 0px 0px 5px;" align=
+=3D""
+valign=3D"top">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT RIGHT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#465280" align=3D"left" valign=3D"top" style=3D"padding:0px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#ffffff; font-size:17px=
+; line-height:1.3em; font-weight:normal;" class=3D"appleLinkBodyTxt">Proces=
+sing takes up to 24 hours for some ticket types. Check your online itinerar=
+y to ensure your ticket has been issued.</td></tr><!-- *=3D*=3D*=3D* END CB=
+: Text (unlinked) *=3D*=3D*=3D* -->
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Right Content =3D=3D=3D=3D=3D=3D --></tr>
+</table>
+</td>
+</tr><!-- ........ END DOUBLE COL WRAPPER ........ -->
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D END 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D --></table>
+</td>
+</tr><!-- ........ END SINGLE COL WRAPPER ........ -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:16px 0px 0px =
+0px; font-family:Helvetica, Arial, sans-serif; color:#001959; font-size:24p=
+x; line-height:30px; font-weight:bold;" class=3D"appleLinkBodyTxt">Thank yo=
+u Radu, we are processing your flight purchase</td></tr><!-- *=3D*=3D*=3D* =
+END CB: Text (unlinked) *=3D*=3D*=3D* -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:5px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#465280; font-size:14px=
+; line-height:18px; font-weight:normal;" class=3D"appleLinkBodyTxt">You unl=
+ocked up to 43% off select hotels* because you booked a flight. Your Add-On=
+ Advantage discount lasts until the day of your trip. <a alias=3D"Search Ho=
+tels" href=3D"http://link.expediamail.com/c/4/?T=3DNjQxMjYyODE%3AMDItYzE5MT=
+M1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5leHBlZGlhQG9obWkub3=
+Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORklSTUFUSU9OLk=
+ZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODUyMDk3NzIuUEFJR=
+FguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2ODJfMy0zMDE0=
+MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2U%3A%3A%3AaHR0cHM6Ly93=
+d3cuZXhwZWRpYS5jb20vdXNlci9lbWFpbGNsaWNrL2JleC1vY3MvOWxmQVgwbDA0RzRia19VU25=
+XOUh3UWUzdkktUERaZWdzZGhENEZsZHZRNHV4bzhfd2dRUW5ILUJybVlVWGxlU1g2MEhJVVdINE=
+tFdEJGWXFSZUYyWDRNb3BWTGRWdF9ZM0hWdHlpR3JadUxmMkptXzU2eEpyeWI0YlVhRm53L2dvL=
+2hvdGVsL3NlYXJjaC9EZXN0aW5hdGlvbi8yMDE5LTA1LTIxLzIwMTktMDUtMjI_Q2l0eU5hbWU9=
+VG9yb250byZTb3J0Qnk9cmVjb21tZW5kZWQmRU1MQ0lEPVVTLlBULkVWRU5UVFJJR0dFUkVETUF=
+JTElORy5FTlNQVVJDSEFTRUNPTkZJUk1BVElPTi5GTElHSFQmRU1MRFRMPURBVEUyMDE5MDUxNS=
+1JU1NVWC5TSURYLktFWTk0MDg1MjA5NzcyLlBBSURYLkxBTkdFTl9VUy5NQ0lEWC5URVNUNC5WR=
+VJTWC5NSURTMS0yNTc5M18yLTI5NjgyXzMtMzAxNDBfNC0zMDE0M181LTI5NzI1XzYtMzAxMzZf=
+Ny0zMDEzNy5NT0Q5NzAtMzctMS0wLUVNQUlMLUhFUk8tRU4tVVNfUzJfUE9TMF9UWFQzNw&K=3D=
+NQhUrYgVK7c7Vdih3osVCA" style=3D"color:#005aeb;">Search hotels ></a></td></=
+tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* --><!-- *=3D*=
+=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcolor=3D"#FFF=
+FFF" align=3D"left" valign=3D"top" style=3D"padding:16px 0px 0px 0px; font-=
+family:Helvetica, Arial, sans-serif; color:#001959; font-size:18px; line-he=
+ight:1.2em; font-weight:bold;" class=3D"appleLinkBodyTxt">Cancun (CUN) to T=
+oronto (YYZ)</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=
+=3D* --><!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><=
+td bgcolor=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:2px 0=
+px 0px 0px; font-family:Helvetica, Arial, sans-serif; color:#465280; font-s=
+ize:14px; line-height:18px; font-weight:normal;" class=3D"appleLinkBodyTxt"=
+>Departs on Tue, May 21 at 6:00am</td></tr><!-- *=3D*=3D*=3D* END CB: Text =
+(unlinked) *=3D*=3D*=3D* --> <!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=
+=3D*=3D*=3D* --><tr><td bgcolor=3D"#FFFFFF" align=3D"left" valign=3D"top" s=
+tyle=3D"padding:2px 0px 0px 0px; font-family:Helvetica, Arial, sans-serif; =
+color:#465280; font-size:14px; line-height:18px; font-weight:normal;" class=
+=3D"appleLinkBodyTxt"><b class=3D"ng-scope">Airline confirmation: </b>IJF3J=
+X (United)</br></td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=
+=3D*=3D* -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"center" valign=3D"top" style=3D"padding:0px 0px 0px=
+ 0px; font-family:Helvetica, Arial, sans-serif; color:#616161; font-size:1p=
+x; line-height:1.3em; font-weight:normal;" class=3D"appleLinkBodyTxt"></td>=
+</tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* -->
+<!-- ....... START SINGLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D""
+style=3D"padding:16px 0px 0px 0px; border-right: none; border-left: none; b=
+order-top: none; border-bottom: 0px solid white; border-radius:0px 0px 0px =
+0px; -webkit-border-radius:0px 0px 0px 0px;-moz-border-radius:0px 0px 0px 0=
+px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D START 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:2px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#465280; font-size:14px=
+; line-height:18px; font-weight:bold;" class=3D"appleLinkBodyTxt"><span sty=
+le=3D"color: #001959;">Traveler:</span> <span style=3D"font-weight: normal"=
+ class=3D"ng-scope">RADU HOCIUNG</span></td></tr><!-- *=3D*=3D*=3D* END CB:=
+ Text (unlinked) *=3D*=3D*=3D* -->
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D END 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D --></table>
+</td>
+</tr><!-- ........ END SINGLE COL WRAPPER ........ -->
+<!-- *=3D*=3D*=3D* START CB: Button *=3D*=3D*=3D* --><tr><td align=3D"cente=
+r" valign=3D"top" bgcolor=3D"#FFFFFF" style=3D"padding: 16px 0px 0px 0px;">=
+<table style=3D"border-collapse: separate;" align=3D"center" valign=3D"" cl=
+ass=3D"ReadMsgBody" cellpadding=3D"15" cellspacing=3D"0"><tr><td bgcolor=3D=
+"#ffcb00" align=3D"center" style=3D"padding: 15px 15px 15px 15px; border-ra=
+dius:2px 2px 2px 2px; -moz-border-radius:2px 2px 2px 2px; -webkit-border-ra=
+dius:2px 2px 2px 2px;border-top:none; border-bottom:none; border-right:none=
+; border-left:none;"><a alias=3D"Button" href=3D"http://link.expediamail.co=
+m/c/4/?T=3DNjQxMjYyODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZj=
+BiZTY0%3AcmFkdS5leHBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5=
+HLkVOU1BVUkNIQVNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1=
+VYLlNJRFguS0VZOTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYL=
+k1JRFMxLTI1NzkzXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMw=
+MTM3%3AZmFsc2U%3A%3A%3AaHR0cHM6Ly93d3cuZXhwZWRpYS5jb20vdXNlci9lbWFpbGNsaWNr=
+L2JleC1vY3MvOWxmQVgwbDA0RzRia19VU25XOUh3UWUzdkktUERaZWdzZGhENEZsZHZRNHV4bzh=
+fd2dRUW5ILUJybVlVWGxlU1g2MEhJVVdINEtFdEJGWXFSZUYyWDRNb3BWTGRWdF9ZM0hWdHlpR3=
+JadUxmMkptXzU2eEpyeWI0YlVhRm53L3RyaXBzLzc0MzQ5NzIwNzg5NTE_ZW1haWw9cmFkdS5le=
+HBlZGlhQG9obWkub3JnJmxhbmdpZD0xMDMzP3VzZXJUb2tlbj05bGZBWDBsMDRHNGJrX1VTblc5=
+SHdRZTN2SS1QRFplZ3NkaEQ0RmxkdlE0dXhvOF93Z1FRbkgtQnJtWVVYbGVTWDYwSElVV0g0S0V=
+0QkZZcVJlRjJYNE1vcFZMZFZ0X1kzSFZ0eWlHclp1TGYySm1fNTZ4SnJ5YjRiVWFGbncmRU1MQ0=
+lEPVVTLlBULkVWRU5UVFJJR0dFUkVETUFJTElORy5FTlNQVVJDSEFTRUNPTkZJUk1BVElPTi5GT=
+ElHSFQmRU1MRFRMPURBVEUyMDE5MDUxNS1JU1NVWC5TSURYLktFWTk0MDg1MjA5NzcyLlBBSURY=
+LkxBTkdFTl9VUy5NQ0lEWC5URVNUNC5WRVJTWC5NSURTMS0yNTc5M18yLTI5NjgyXzMtMzAxNDB=
+fNC0zMDE0M181LTI5NzI1XzYtMzAxMzZfNy0zMDEzNy5NT0Q5NzAtMzctMS0wLUVNQUlMLUhFUk=
+8tRU4tVVNfUzItUDIyX1BPUzBfQlROMjE&K=3DAnzN3_zpZvT-F-6NTtgaHg" style=3D"font=
+-family: Helvetica, Arial, sans-serif; color:#1f1f1f; font-size:16px; font-=
+weight:bold; display:block; text-decoration:none;" target=3D"_blank" >VIEW =
+YOUR ITINERARY</a></td></tr></table></td></tr><!-- *=3D*=3D*=3D* END CB: Bu=
+tton *=3D*=3D*=3D* --><!-- *=3D*=3D*=3D* START CB: Button *=3D*=3D*=3D* -->=
+<tr><td align=3D"center" valign=3D"top" bgcolor=3D"#FFFFFF" style=3D"paddin=
+g: 16px 0px 0px 0px;"><table style=3D"border-collapse: separate;" align=3D"=
+center" valign=3D"" class=3D"FlexWidth100" cellpadding=3D"15" cellspacing=
+=3D"0"><tr><td bgcolor=3D"#ffffff" align=3D"center" style=3D"padding: 15px =
+15px 15px 15px; border-radius:2px; -moz-border-radius:2px; -webkit-border-r=
+adius:2px;border-top:none; border-bottom:none; border-right:none; border-le=
+ft:none;"><a alias=3D"Button" href=3D"http://link.expediamail.com/c/4/?T=3D=
+NjQxMjYyODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3Acm=
+FkdS5leHBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUk=
+NIQVNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS=
+0VZOTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1=
+NzkzXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFs=
+c2U%3A%3A%3AaHR0cHM6Ly90MXktOC50bG5rLmlvL3NlcnZlP2FjdGlvbj1jbGljayZwdWJsaXN=
+oZXJfaWQ9MTY5MDA2JnNpdGVfaWQ9MTAyNzEyJmFnZW5jeV9pZD0xMDM0Jm15X2NhbXBhaWduPU=
+JSQU5EJm15X3B1Ymxpc2hlcj1FWFBFRElBLVVTJm15X3NpdGU9R0VORVJJQyZteV9hZGdyb3VwP=
+UJSQU5EOkRJU1BMQVkuRU9EJm15X2FkPUVNTC5VUy5QVC5FVkVOVFRSSUdHRVJFRE1BSUxJTkcu=
+RU5TUFVSQ0hBU0VDT05GSVJNQVRJT04uRkxJR0hUJm15X3BsYWNlbWVudD1FTUwtUFVSQ0hBU0V=
+DT05GSVJNQVRJT04tRkxJR0hUJnNpdGVfaWRfYW5kcm9pZD0xMDc2Nzgmc2l0ZV9pZF93ZWI9MT=
+I4NDUwJkVNTENJRD1VUy5QVC5FVkVOVFRSSUdHRVJFRE1BSUxJTkcuRU5TUFVSQ0hBU0VDT05GS=
+VJNQVRJT04uRkxJR0hUJkVNTERUTD1EQVRFMjAxOTA1MTUtSVNTVVguU0lEWC5LRVk5NDA4NTIw=
+OTc3Mi5QQUlEWC5MQU5HRU5fVVMuTUNJRFguVEVTVDQuVkVSU1guTUlEUzEtMjU3OTNfMi0yOTY=
+4Ml8zLTMwMTQwXzQtMzAxNDNfNS0yOTcyNV82LTMwMTM2XzctMzAxMzcuTU9EOTcwLTM3LTEtMC=
+1FTUFJTC1IRVJPLUVOLVVTX1MyLVAyNF9QT1MwX0JUTjE3MA&K=3DnlBad_39NYWWUsMZIHdijg=
+" style=3D"font-family: Helvetica, Arial, sans-serif; color:#005aeb; font-s=
+ize:16px; font-weight:bold; display:block; text-decoration:none;" target=3D=
+"_blank" >DOWNLOAD TO YOUR PHONE</a></td></tr></table></td></tr><!-- *=3D*=
+=3D*=3D* END CB: Button *=3D*=3D*=3D* --><!-- *=3D*=3D*=3D* START CB: Text =
+(linked) *=3D*=3D*=3D* --><tr><td bgcolor=3D"#FFFFFF" align=3D"center" vali=
+gn=3D"" style=3D"padding: 0px 0px 16px 0px;" class=3D""><a alias=3D"Header"=
+ href=3D"http://link.expediamail.com/c/4/?T=3DNjQxMjYyODE%3AMDItYzE5MTM1LTY=
+xMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5leHBlZGlhQG9obWkub3Jn%3A=
+VVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORklSTUFUSU9OLkZMSUd=
+IVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODUyMDk3NzIuUEFJRFguTE=
+FOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2ODJfMy0zMDE0MF80L=
+TMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2U%3A%3A%3AaHR0cHM6Ly93d3cuZ=
+XhwZWRpYS5jb20vdXNlci9lbWFpbGNsaWNrL2JleC1vY3MvOWxmQVgwbDA0RzRia19VU25XOUh3=
+UWUzdkktUERaZWdzZGhENEZsZHZRNHV4bzhfd2dRUW5ILUJybVlVWGxlU1g2MEhJVVdINEtFdEJ=
+GWXFSZUYyWDRNb3BWTGRWdF9ZM0hWdHlpR3JadUxmMkptXzU2eEpyeWI0YlVhRm53L2FkZG9uYW=
+R2YW50YWdlP0VNTENJRD1VUy5QVC5FVkVOVFRSSUdHRVJFRE1BSUxJTkcuRU5TUFVSQ0hBU0VDT=
+05GSVJNQVRJT04uRkxJR0hUJkVNTERUTD1EQVRFMjAxOTA1MTUtSVNTVVguU0lEWC5LRVk5NDA4=
+NTIwOTc3Mi5QQUlEWC5MQU5HRU5fVVMuTUNJRFguVEVTVDQuVkVSU1guTUlEUzEtMjU3OTNfMi0=
+yOTY4Ml8zLTMwMTQwXzQtMzAxNDNfNS0yOTcyNV82LTMwMTM2XzctMzAxMzcuTU9EOTcwLTM3LT=
+EtMC1FTUFJTC1IRVJPLUVOLVVTX1MyLVAyNl9QT1MwX0xOSzE3MQ&K=3Da332rX5vuBe5c0zQ3d=
+2g1A" style=3D"font-family: Helvetica, Arial, sans-serif; color:#005aeb; fo=
+nt-size:12px; line-height:16px; font-weight:normal; text-decoration:none;" =
+target=3D"_blank" nowrap=3D"" >*See terms</a></td></tr><!-- *=3D*=3D*=3D* E=
+ND CB: Text (linked) *=3D*=3D*=3D* --><!-- ....... START SINGLE COL WRAPPER=
+ ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D""
+style=3D"padding:0px 0px 0px 0px; border-right: none; border-left: none; bo=
+rder-top: 1px solid #c7c7c7; border-bottom: none; border-radius:0px 0px 0px=
+ 0px; -webkit-border-radius:0px 0px 0px 0px;-moz-border-radius:0px 0px 0px =
+0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D START 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:16px 0px 0px =
+0px; font-family:Helvetica, Arial, sans-serif; color:#001959; font-size:18p=
+x; line-height:1.3em; font-weight:bold;" class=3D"appleLinkBodyTxt">Before =
+you go</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* --=
+>
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D END 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D --></table>
+</td>
+</tr><!-- ........ END SINGLE COL WRAPPER ........ -->
+<!-- ....... START DOUBLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D"top"
+style=3D"padding:12px 0px 0px 0px; border-right: none; border-left: none; b=
+order-top: none; border-bottom: none; border-radius:0px 0px 0px 0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<tr><!-- =3D=3D=3D=3D=3D START Left Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 5px 0px 0px;" align=
+=3D""
+valign=3D"top" width=3D"20">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT LEFT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"center" valign=3D"top" style=3D"padding:0px 0px 0px=
+ 0px; font-family:Helvetica, Arial, sans-serif; color:#616161; font-size:17=
+px; line-height:1.3em; font-weight:normal;" class=3D"appleLinkBodyTxt">=E2=
+=80=A2</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* --=
+>
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Left Content =3D=3D=3D=3D=3D=3D --><!-- =
+=3D=3D=3D=3D=3D START Right Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 0px 0px 5px;" align=
+=3D""
+valign=3D"top">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT RIGHT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:4px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#465280; font-size:12px=
+; line-height:1.3em; font-weight:normal;" class=3D"appleLinkBodyTxt">E-tick=
+et: This email can be used as an E-ticket.</td></tr><!-- *=3D*=3D*=3D* END =
+CB: Text (unlinked) *=3D*=3D*=3D* -->
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Right Content =3D=3D=3D=3D=3D=3D --></tr>
+</table>
+</td>
+</tr><!-- ........ END DOUBLE COL WRAPPER ........ -->
+<!-- ....... START DOUBLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D"top"
+style=3D"padding:0px 0px 0px 0px; border-right: none; border-left: none; bo=
+rder-top: none; border-bottom: none; border-radius:0px 0px 0px 0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<tr><!-- =3D=3D=3D=3D=3D START Left Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 5px 0px 0px;" align=
+=3D""
+valign=3D"top" width=3D"20">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT LEFT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"center" valign=3D"top" style=3D"padding:0px 0px 0px=
+ 0px; font-family:Helvetica, Arial, sans-serif; color:#616161; font-size:17=
+px; line-height:1.3em; font-weight:normal;" class=3D"appleLinkBodyTxt">=E2=
+=80=A2</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* --=
+>
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Left Content =3D=3D=3D=3D=3D=3D --><!-- =
+=3D=3D=3D=3D=3D START Right Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 0px 0px 5px;" align=
+=3D""
+valign=3D"top">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT RIGHT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:4px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#465280; font-size:12px=
+; line-height:1.3em; font-weight:normal;" class=3D"appleLinkBodyTxt">Rememb=
+er to bring your itinerary and government-issued photo ID for airport check=
+-in and security.</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=
+=3D*=3D* -->
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Right Content =3D=3D=3D=3D=3D=3D --></tr>
+</table>
+</td>
+</tr><!-- ........ END DOUBLE COL WRAPPER ........ -->
+<!-- ....... START DOUBLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D"top"
+style=3D"padding:0px 0px 0px 0px; border-right: none; border-left: none; bo=
+rder-top: none; border-bottom: none; border-radius:0px 0px 0px 0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<tr><!-- =3D=3D=3D=3D=3D START Left Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 5px 0px 0px;" align=
+=3D""
+valign=3D"top" width=3D"20">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT LEFT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"center" valign=3D"top" style=3D"padding:0px 0px 0px=
+ 0px; font-family:Helvetica, Arial, sans-serif; color:#616161; font-size:17=
+px; line-height:1.3em; font-weight:normal;" class=3D"appleLinkBodyTxt">=E2=
+=80=A2</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* --=
+>
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Left Content =3D=3D=3D=3D=3D=3D --><!-- =
+=3D=3D=3D=3D=3D START Right Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 0px 0px 5px;" align=
+=3D""
+valign=3D"top">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT RIGHT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:4px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#465280; font-size:12px=
+; line-height:1.3em; font-weight:normal;" class=3D"appleLinkBodyTxt">Proof =
+of citizenship is required for international travel. Be sure to bring all n=
+ecessary documentation (e.g. passport, visa, transit permit). To learn more=
+, visit our <a href=3D"http://link.expediamail.com/c/4/?T=3DNjQxMjYyODE%3AM=
+DItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5leHBlZGlhQ=
+G9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORklST=
+UFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODUyMDk3=
+NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2ODJ=
+fMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2U%3A%3A%3AaHR=
+0cDovL3Zpc2FjZW50cmFsLmNvbS9pbmRleC5waHA_bG9naW49ODUwMDEmdXRtX2NhbXBhaWduPU=
+V4cGVkaWEmdXRtX21lZGl1bT0xJnV0bV9zb3VyY2U9VVMmcmZycj1GTFQuSXRpbi5WaXNhU2l0Z=
+SZFTUxDSUQ9VVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORklSTUFU=
+SU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODUyMDk3NzI=
+uUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2ODJfMy=
+0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3Lk1PRDk3MC0zNy0xLTAtRU1BS=
+UwtSEVSTy1FTi1VU19TMl9QT1MwX1RYVDEwMQ&K=3D6MR5AjgBHjk79TbheImkVg" class=3D"=
+tooltip" >Visa and Passport page <span class=3D"visually-hidden">(Opens a n=
+ew window) </span></a>.</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked)=
+ *=3D*=3D*=3D* -->
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Right Content =3D=3D=3D=3D=3D=3D --></tr>
+</table>
+</td>
+</tr><!-- ........ END DOUBLE COL WRAPPER ........ -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:16px 0px 0px =
+0px; font-family:Helvetica, Arial, sans-serif; color:#001959; font-size:12p=
+x; line-height:1.3em; font-weight:bold;" class=3D"appleLinkBodyTxt">Contact=
+ the airline to confirm:</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked=
+) *=3D*=3D*=3D* --><!-- ....... START DOUBLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D"top"
+style=3D"padding:4px 0px 0px 0px; border-right: none; border-left: none; bo=
+rder-top: none; border-bottom: none; border-radius:0px 0px 0px 0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<tr><!-- =3D=3D=3D=3D=3D START Left Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 5px 0px 0px;" align=
+=3D""
+valign=3D"top" width=3D"20">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT LEFT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"center" valign=3D"top" style=3D"padding:0px 0px 0px=
+ 0px; font-family:Helvetica, Arial, sans-serif; color:#616161; font-size:17=
+px; line-height:1.3em; font-weight:normal;" class=3D"appleLinkBodyTxt">=E2=
+=80=A2</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* --=
+>
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Left Content =3D=3D=3D=3D=3D=3D --><!-- =
+=3D=3D=3D=3D=3D START Right Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 0px 0px 5px;" align=
+=3D""
+valign=3D"top">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT RIGHT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:4px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#465280; font-size:12px=
+; line-height:1.3em; font-weight:normal;" class=3D"appleLinkBodyTxt">Specif=
+ic seat assignments</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=
+=3D*=3D*=3D* -->
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Right Content =3D=3D=3D=3D=3D=3D --></tr>
+</table>
+</td>
+</tr><!-- ........ END DOUBLE COL WRAPPER ........ -->
+<!-- ....... START DOUBLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D"top"
+style=3D"padding:0px 0px 0px 0px; border-right: none; border-left: none; bo=
+rder-top: none; border-bottom: none; border-radius:0px 0px 0px 0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<tr><!-- =3D=3D=3D=3D=3D START Left Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 5px 0px 0px;" align=
+=3D""
+valign=3D"top" width=3D"20">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT LEFT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"center" valign=3D"top" style=3D"padding:0px 0px 0px=
+ 0px; font-family:Helvetica, Arial, sans-serif; color:#616161; font-size:17=
+px; line-height:1.3em; font-weight:normal;" class=3D"appleLinkBodyTxt">=E2=
+=80=A2</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* --=
+>
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Left Content =3D=3D=3D=3D=3D=3D --><!-- =
+=3D=3D=3D=3D=3D START Right Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 0px 0px 5px;" align=
+=3D""
+valign=3D"top">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT RIGHT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:4px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#465280; font-size:12px=
+; line-height:1.3em; font-weight:normal;" class=3D"appleLinkBodyTxt">Specia=
+l meals</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* -=
+->
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Right Content =3D=3D=3D=3D=3D=3D --></tr>
+</table>
+</td>
+</tr><!-- ........ END DOUBLE COL WRAPPER ........ -->
+<!-- ....... START DOUBLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D"top"
+style=3D"padding:0px 0px 0px 0px; border-right: none; border-left: none; bo=
+rder-top: none; border-bottom: none; border-radius:0px 0px 0px 0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<tr><!-- =3D=3D=3D=3D=3D START Left Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 5px 0px 0px;" align=
+=3D""
+valign=3D"top" width=3D"20">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT LEFT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"center" valign=3D"top" style=3D"padding:0px 0px 0px=
+ 0px; font-family:Helvetica, Arial, sans-serif; color:#616161; font-size:17=
+px; line-height:1.3em; font-weight:normal;" class=3D"appleLinkBodyTxt">=E2=
+=80=A2</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* --=
+>
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Left Content =3D=3D=3D=3D=3D=3D --><!-- =
+=3D=3D=3D=3D=3D START Right Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 0px 0px 5px;" align=
+=3D""
+valign=3D"top">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT RIGHT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:4px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#465280; font-size:12px=
+; line-height:1.3em; font-weight:normal;" class=3D"appleLinkBodyTxt">Freque=
+nt flyer point awards</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=
+=3D*=3D*=3D* -->
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Right Content =3D=3D=3D=3D=3D=3D --></tr>
+</table>
+</td>
+</tr><!-- ........ END DOUBLE COL WRAPPER ........ -->
+<!-- ....... START DOUBLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D"top"
+style=3D"padding:0px 0px 0px 0px; border-right: none; border-left: none; bo=
+rder-top: none; border-bottom: none; border-radius:0px 0px 0px 0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<tr><!-- =3D=3D=3D=3D=3D START Left Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 5px 0px 0px;" align=
+=3D""
+valign=3D"top" width=3D"20">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT LEFT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"center" valign=3D"top" style=3D"padding:0px 0px 0px=
+ 0px; font-family:Helvetica, Arial, sans-serif; color:#616161; font-size:17=
+px; line-height:1.3em; font-weight:normal;" class=3D"appleLinkBodyTxt">=E2=
+=80=A2</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* --=
+>
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Left Content =3D=3D=3D=3D=3D=3D --><!-- =
+=3D=3D=3D=3D=3D START Right Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 0px 0px 5px;" align=
+=3D""
+valign=3D"top">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT RIGHT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:4px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#465280; font-size:12px=
+; line-height:1.3em; font-weight:normal;" class=3D"appleLinkBodyTxt">Specia=
+l assistance requests</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=
+=3D*=3D*=3D* -->
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Right Content =3D=3D=3D=3D=3D=3D --></tr>
+</table>
+</td>
+</tr><!-- ........ END DOUBLE COL WRAPPER ........ -->
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D END 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D --></table>
+</td>
+</tr><!-- ........ END SINGLE COL WRAPPER ........ -->
+<tr><td height=3D"15"></td></tr>
+<!-- ....... START SINGLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D""
+style=3D"padding:16px 16px 16px 16px; border-right: none; border-left: none=
+; border-top: none; border-bottom: none; border-radius:0px 0px 0px 0px; -we=
+bkit-border-radius:0px 0px 0px 0px;-moz-border-radius:0px 0px 0px 0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D START 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:0px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#001959; font-size:18px=
+; line-height:22px; font-weight:bold;" class=3D"appleLinkBodyTxt">Flight de=
+tails</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:4px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#001959; font-size:14px=
+; line-height:1.3em; font-weight:normal;" class=3D"appleLinkBodyTxt"><span =
+class=3D"ng-scope"><b>Airline confirmation:</b> <span style=3D"color: #4652=
+80;">IJF3JX (United)</br></span></span></td></tr><!-- *=3D*=3D*=3D* END CB:=
+ Text (unlinked) *=3D*=3D*=3D* -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:16px 0px 0px =
+0px; font-family:Helvetica, Arial, sans-serif; color:#001959; font-size:14p=
+x; line-height:18px; font-weight:bold;" class=3D"appleLinkBodyTxt">Leg 1 =
+=E2=80=A2 Tue, May 21</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=
+=3D*=3D*=3D* -->
+<!-- ....... START SINGLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D""
+style=3D"padding:12px 0px 0px 0px; border-right: none; border-left: none; b=
+order-top: none; border-bottom: none; border-radius:0px 0px 0px 0px; -webki=
+t-border-radius:0px 0px 0px 0px;-moz-border-radius:0px 0px 0px 0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D START 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:0px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#465280; font-size:12px=
+; line-height:16px; font-weight:normal;" class=3D"appleLinkBodyTxt">United<=
+/td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:2px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#465280; font-size:12px=
+; line-height:16px; font-weight:normal;" class=3D"appleLinkBodyTxt">1011</t=
+d></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* -->
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D END 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D --></table>
+</td>
+</tr><!-- ........ END SINGLE COL WRAPPER ........ -->
+<!-- ....... START DOUBLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D"top"
+style=3D"padding:16px 16px 0px 16px; border-right: none; border-left: none;=
+ border-top: none; border-bottom: none; border-radius:0px 0px 0px 0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<tr><!-- =3D=3D=3D=3D=3D START Left Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 5px 0px 0px;" align=
+=3D""
+valign=3D"top" width=3D"20">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT LEFT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Image *=3D*=3D*=3D* --><tr><td bgcolor=3D"#FFF=
+FFF" align=3D"left" valign=3D"top" style=3D"padding:0px 0px 0px 0px;"><a al=
+ias=3D"Image" href=3D"http://link.expediamail.com/c/4/?T=3DNjQxMjYyODE%3AMD=
+ItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5leHBlZGlhQG=
+9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORklSTU=
+FUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODUyMDk3N=
+zIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2ODJf=
+My0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2U%3A%3A%3AaHR0=
+cHM6Ly93d3cuZXhwZWRpYS5jb20vdXNlci9lbWFpbGNsaWNrL2JleC1vY3MvOWxmQVgwbDA0RzR=
+ia19VU25XOUh3UWUzdkktUERaZWdzZGhENEZsZHZRNHV4bzhfd2dRUW5ILUJybVlVWGxlU1g2ME=
+hJVVdINEtFdEJGWXFSZUYyWDRNb3BWTGRWdF9ZM0hWdHlpR3JadUxmMkptXzU2eEpyeWI0YlVhR=
+m53L3RyaXBzLzc0MzQ5NzIwNzg5NTE_ZW1haWw9cmFkdS5leHBlZGlhQG9obWkub3JnJmxhbmdp=
+ZD0xMDMzP3VzZXJUb2tlbj05bGZBWDBsMDRHNGJrX1VTblc5SHdRZTN2SS1QRFplZ3NkaEQ0Rmx=
+kdlE0dXhvOF93Z1FRbkgtQnJtWVVYbGVTWDYwSElVV0g0S0V0QkZZcVJlRjJYNE1vcFZMZFZ0X1=
+kzSFZ0eWlHclp1TGYySm1fNTZ4SnJ5YjRiVWFGbncmRU1MQ0lEPVVTLlBULkVWRU5UVFJJR0dFU=
+kVETUFJTElORy5FTlNQVVJDSEFTRUNPTkZJUk1BVElPTi5GTElHSFQmRU1MRFRMPURBVEUyMDE5=
+MDUxNS1JU1NVWC5TSURYLktFWTk0MDg1MjA5NzcyLlBBSURYLkxBTkdFTl9VUy5NQ0lEWC5URVN=
+UNC5WRVJTWC5NSURTMS0yNTc5M18yLTI5NjgyXzMtMzAxNDBfNC0zMDE0M181LTI5NzI1XzYtMz=
+AxMzZfNy0zMDEzNy5NT0Q5NjQtNTItMS0wLUVNQUlMLUJBTk5FUi1FTi1VU19TMy1QMTRfUE9TM=
+F9JTUczMTM&K=3DzNgGb3X8piApybh6z74y5w" target=3D"_blank"><img src=3D"https:=
+//cdn.lemediavault.com/images/585f6a636d4e24571914735e70c49dbc.png" alt=3D"=
+Flight Takeoff" style=3D"display:block;" width=3D"20" height=3D"auto" borde=
+r=3D"0" class=3D""></a></td></tr><!-- *=3D*=3D*=3D* END CB: Image *=3D*=3D*=
+=3D* -->
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Left Content =3D=3D=3D=3D=3D=3D --><!-- =
+=3D=3D=3D=3D=3D START Right Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 0px 0px 5px;" align=
+=3D""
+valign=3D"top">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT RIGHT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:0px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#001959; font-size:14px=
+; line-height:18px; font-weight:normal;" class=3D"appleLinkBodyTxt">6:00am =
+=E2=80=A2 Cancun, Quintana Roo, Mexico (CUN-Cancun Intl.)</td></tr><!-- *=
+=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* --><!-- *=3D*=3D*=3D* ST=
+ART CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcolor=3D"#FFFFFF" align=
+=3D"left" valign=3D"top" style=3D"padding:8px 0px 0px 0px; font-family:Helv=
+etica, Arial, sans-serif; color:#465280; font-size:12px; line-height:16px; =
+font-weight:normal;" class=3D"appleLinkBodyTxt">2h 21m flight duration</td>=
+</tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* --><!-- *=3D*=
+=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcolor=3D"#FFF=
+FFF" align=3D"left" valign=3D"top" style=3D"padding:8px 0px 0px 0px; font-f=
+amily:Helvetica, Arial, sans-serif; color:#465280; font-size:12px; line-hei=
+ght:16px; font-weight:normal;" class=3D"appleLinkBodyTxt">Economy / Coach (=
+T) =E2=80=A2 Boeing 737-900</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlin=
+ked) *=3D*=3D*=3D* --> <!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=
+=3D*=3D* --><tr><td bgcolor=3D"#FFFFFF" align=3D"left" valign=3D"top" style=
+=3D"padding:0px 0px 0px 0px; font-family:Helvetica, Arial, sans-serif; colo=
+r:#465280; font-size:12px; line-height:16px; font-weight:normal;" class=3D"=
+appleLinkBodyTxt">Seat: Confirm with airline</td></tr><!-- *=3D*=3D*=3D* EN=
+D CB: Text (unlinked) *=3D*=3D*=3D* -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:0px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#616161; font-size:0px;=
+ line-height:0em; font-weight:normal;" class=3D"appleLinkBodyTxt"><br></td>=
+</tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* -->
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Right Content =3D=3D=3D=3D=3D=3D --></tr>
+</table>
+</td>
+</tr><!-- ........ END DOUBLE COL WRAPPER ........ -->
+<!-- ....... START DOUBLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D"top"
+style=3D"padding:16px 16px 0px 16px; border-right: none; border-left: none;=
+ border-top: none; border-bottom: none; border-radius:0px 0px 0px 0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<tr><!-- =3D=3D=3D=3D=3D START Left Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 5px 0px 0px;" align=
+=3D""
+valign=3D"top" width=3D"20">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT LEFT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Image *=3D*=3D*=3D* --><tr><td bgcolor=3D"#FFF=
+FFF" align=3D"left" valign=3D"top" style=3D"padding:0px 0px 0px 0px;"><a al=
+ias=3D"Image" href=3D"http://link.expediamail.com/c/4/?T=3DNjQxMjYyODE%3AMD=
+ItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5leHBlZGlhQG=
+9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORklSTU=
+FUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODUyMDk3N=
+zIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2ODJf=
+My0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2U%3A%3A%3AaHR0=
+cHM6Ly93d3cuZXhwZWRpYS5jb20vdXNlci9lbWFpbGNsaWNrL2JleC1vY3MvOWxmQVgwbDA0RzR=
+ia19VU25XOUh3UWUzdkktUERaZWdzZGhENEZsZHZRNHV4bzhfd2dRUW5ILUJybVlVWGxlU1g2ME=
+hJVVdINEtFdEJGWXFSZUYyWDRNb3BWTGRWdF9ZM0hWdHlpR3JadUxmMkptXzU2eEpyeWI0YlVhR=
+m53L3RyaXBzLzc0MzQ5NzIwNzg5NTE_ZW1haWw9cmFkdS5leHBlZGlhQG9obWkub3JnJmxhbmdp=
+ZD0xMDMzP3VzZXJUb2tlbj05bGZBWDBsMDRHNGJrX1VTblc5SHdRZTN2SS1QRFplZ3NkaEQ0Rmx=
+kdlE0dXhvOF93Z1FRbkgtQnJtWVVYbGVTWDYwSElVV0g0S0V0QkZZcVJlRjJYNE1vcFZMZFZ0X1=
+kzSFZ0eWlHclp1TGYySm1fNTZ4SnJ5YjRiVWFGbncmRU1MQ0lEPVVTLlBULkVWRU5UVFJJR0dFU=
+kVETUFJTElORy5FTlNQVVJDSEFTRUNPTkZJUk1BVElPTi5GTElHSFQmRU1MRFRMPURBVEUyMDE5=
+MDUxNS1JU1NVWC5TSURYLktFWTk0MDg1MjA5NzcyLlBBSURYLkxBTkdFTl9VUy5NQ0lEWC5URVN=
+UNC5WRVJTWC5NSURTMS0yNTc5M18yLTI5NjgyXzMtMzAxNDBfNC0zMDE0M181LTI5NzI1XzYtMz=
+AxMzZfNy0zMDEzNy5NT0Q5NjQtNTItMS0wLUVNQUlMLUJBTk5FUi1FTi1VU19TMy1QMjhfUE9TM=
+F9JTUczMDY&K=3DlhBXIVYzZdlimfWVFetS7g" target=3D"_blank"><img src=3D"https:=
+//cdn.lemediavault.com/images/e06eb25023bbcc990e3a135b8474aad7.png" alt=3D"=
+Flight Landing" style=3D"display:block;" width=3D"20" height=3D"auto" borde=
+r=3D"0" class=3D""></a></td></tr><!-- *=3D*=3D*=3D* END CB: Image *=3D*=3D*=
+=3D* -->
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Left Content =3D=3D=3D=3D=3D=3D --><!-- =
+=3D=3D=3D=3D=3D START Right Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 0px 0px 5px;" align=
+=3D""
+valign=3D"top">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT RIGHT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:0px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#001959; font-size:14px=
+; line-height:18px; font-weight:normal;" class=3D"appleLinkBodyTxt">8:21am =
+=E2=80=A2 Houston, TX (IAH-George Bush Intercontinental)</td></tr><!-- *=3D=
+*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* -->
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Right Content =3D=3D=3D=3D=3D=3D --></tr>
+</table>
+</td>
+</tr><!-- ........ END DOUBLE COL WRAPPER ........ -->
+<!-- ....... START SINGLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D""
+style=3D"padding:16px 0px 0px 0px; border-right: none; border-left: none; b=
+order-top: none; border-bottom: 0px solid #ffffff; border-radius:0px 0px 0p=
+x 0px; -webkit-border-radius:0px 0px 0px 0px;-moz-border-radius:0px 0px 0px=
+ 0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D START 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#f5f6fa" align=3D"center" valign=3D"top" style=3D"padding:16px 0px 16=
+px 0px; font-family:Helvetica, Arial, sans-serif; color:#001959; font-size:=
+14px; line-height:1.3em; font-weight:normal;" class=3D"appleLinkBodyTxt">La=
+yover: 3h 47m</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=
+=3D* -->
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D END 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D --></table>
+</td>
+</tr><!-- ........ END SINGLE COL WRAPPER ........ -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:16px 0px 0px =
+0px; font-family:Helvetica, Arial, sans-serif; color:#001959; font-size:14p=
+x; line-height:18px; font-weight:bold;" class=3D"appleLinkBodyTxt">Leg 2 =
+=E2=80=A2 Tue, May 21</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=
+=3D*=3D*=3D* --><!-- ....... START SINGLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D""
+style=3D"padding:12px 0px 0px 0px; border-right: none; border-left: none; b=
+order-top: none; border-bottom: none; border-radius:0px 0px 0px 0px; -webki=
+t-border-radius:0px 0px 0px 0px;-moz-border-radius:0px 0px 0px 0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D START 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:0px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#465280; font-size:12px=
+; line-height:16px; font-weight:normal;" class=3D"appleLinkBodyTxt">United<=
+/td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* -->
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D END 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D --></table>
+</td>
+</tr><!-- ........ END SINGLE COL WRAPPER ........ -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:2px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#465280; font-size:12px=
+; line-height:16px; font-weight:normal;" class=3D"appleLinkBodyTxt">2354</t=
+d></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* --><!-- ...=
+.... START DOUBLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D"top"
+style=3D"padding:16px 16px 0px 16px; border-right: none; border-left: none;=
+ border-top: none; border-bottom: none; border-radius:0px 0px 0px 0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<tr><!-- =3D=3D=3D=3D=3D START Left Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 5px 0px 0px;" align=
+=3D""
+valign=3D"top" width=3D"20">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT LEFT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Image *=3D*=3D*=3D* --><tr><td bgcolor=3D"#FFF=
+FFF" align=3D"left" valign=3D"top" style=3D"padding:0px 0px 0px 0px;"><a al=
+ias=3D"Image" href=3D"http://link.expediamail.com/c/4/?T=3DNjQxMjYyODE%3AMD=
+ItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5leHBlZGlhQG=
+9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORklSTU=
+FUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODUyMDk3N=
+zIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2ODJf=
+My0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2U%3A%3A%3AaHR0=
+cHM6Ly93d3cuZXhwZWRpYS5jb20vdXNlci9lbWFpbGNsaWNrL2JleC1vY3MvOWxmQVgwbDA0RzR=
+ia19VU25XOUh3UWUzdkktUERaZWdzZGhENEZsZHZRNHV4bzhfd2dRUW5ILUJybVlVWGxlU1g2ME=
+hJVVdINEtFdEJGWXFSZUYyWDRNb3BWTGRWdF9ZM0hWdHlpR3JadUxmMkptXzU2eEpyeWI0YlVhR=
+m53L3RyaXBzLzc0MzQ5NzIwNzg5NTE_ZW1haWw9cmFkdS5leHBlZGlhQG9obWkub3JnJmxhbmdp=
+ZD0xMDMzP3VzZXJUb2tlbj05bGZBWDBsMDRHNGJrX1VTblc5SHdRZTN2SS1QRFplZ3NkaEQ0Rmx=
+kdlE0dXhvOF93Z1FRbkgtQnJtWVVYbGVTWDYwSElVV0g0S0V0QkZZcVJlRjJYNE1vcFZMZFZ0X1=
+kzSFZ0eWlHclp1TGYySm1fNTZ4SnJ5YjRiVWFGbncmRU1MQ0lEPVVTLlBULkVWRU5UVFJJR0dFU=
+kVETUFJTElORy5FTlNQVVJDSEFTRUNPTkZJUk1BVElPTi5GTElHSFQmRU1MRFRMPURBVEUyMDE5=
+MDUxNS1JU1NVWC5TSURYLktFWTk0MDg1MjA5NzcyLlBBSURYLkxBTkdFTl9VUy5NQ0lEWC5URVN=
+UNC5WRVJTWC5NSURTMS0yNTc5M18yLTI5NjgyXzMtMzAxNDBfNC0zMDE0M181LTI5NzI1XzYtMz=
+AxMzZfNy0zMDEzNy5NT0Q5NjQtNTItMS0wLUVNQUlMLUJBTk5FUi1FTi1VU19TMy1QNDBfUE9TM=
+F9JTUczNDQ&K=3DjBsQkJ3aZR7KD6Nyk10Bsw" target=3D"_blank"><img src=3D"https:=
+//cdn.lemediavault.com/images/585f6a636d4e24571914735e70c49dbc.png" alt=3D"=
+Flight Takeoff" style=3D"display:block;" width=3D"20" height=3D"auto" borde=
+r=3D"0" class=3D""></a></td></tr><!-- *=3D*=3D*=3D* END CB: Image *=3D*=3D*=
+=3D* -->
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Left Content =3D=3D=3D=3D=3D=3D --><!-- =
+=3D=3D=3D=3D=3D START Right Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 0px 0px 5px;" align=
+=3D""
+valign=3D"top">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT RIGHT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:0px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#001959; font-size:14px=
+; line-height:18px; font-weight:normal;" class=3D"appleLinkBodyTxt">12:08pm=
+ =E2=80=A2 Houston, TX (IAH-George Bush Intercontinental)</td></tr><!-- *=
+=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* --><!-- *=3D*=3D*=3D* ST=
+ART CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcolor=3D"#FFFFFF" align=
+=3D"left" valign=3D"top" style=3D"padding:8px 0px 0px 0px; font-family:Helv=
+etica, Arial, sans-serif; color:#465280; font-size:12px; line-height:16px; =
+font-weight:normal;" class=3D"appleLinkBodyTxt">3h 22m flight duration</td>=
+</tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* --><!-- *=3D*=
+=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcolor=3D"#FFF=
+FFF" align=3D"left" valign=3D"top" style=3D"padding:8px 0px 0px 0px; font-f=
+amily:Helvetica, Arial, sans-serif; color:#465280; font-size:12px; line-hei=
+ght:16px; font-weight:normal;" class=3D"appleLinkBodyTxt">Economy / Coach (=
+T) =E2=80=A2 Airbus A320</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked=
+) *=3D*=3D*=3D* --> <!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=
+=3D* --><tr><td bgcolor=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"=
+padding:0px 0px 0px 0px; font-family:Helvetica, Arial, sans-serif; color:#4=
+65280; font-size:12px; line-height:16px; font-weight:normal;" class=3D"appl=
+eLinkBodyTxt">Seat: Confirm with airline</td></tr><!-- *=3D*=3D*=3D* END CB=
+: Text (unlinked) *=3D*=3D*=3D* -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"center" valign=3D"top" style=3D"padding:0px 0px 0px=
+ 0px; font-family:Helvetica, Arial, sans-serif; color:#616161; font-size:0p=
+x; line-height:0em; font-weight:normal;" class=3D"appleLinkBodyTxt"><br></t=
+d></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* -->
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Right Content =3D=3D=3D=3D=3D=3D --></tr>
+</table>
+</td>
+</tr><!-- ........ END DOUBLE COL WRAPPER ........ -->
+<!-- ....... START DOUBLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D"top"
+style=3D"padding:16px 16px 0px 16px; border-right: none; border-left: none;=
+ border-top: none; border-bottom: none; border-radius:0px 0px 0px 0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<tr><!-- =3D=3D=3D=3D=3D START Left Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 5px 0px 0px;" align=
+=3D""
+valign=3D"top" width=3D"20">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT LEFT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Image *=3D*=3D*=3D* --><tr><td bgcolor=3D"#FFF=
+FFF" align=3D"left" valign=3D"top" style=3D"padding:0px 0px 0px 0px;"><a al=
+ias=3D"Image" href=3D"http://link.expediamail.com/c/4/?T=3DNjQxMjYyODE%3AMD=
+ItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5leHBlZGlhQG=
+9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORklSTU=
+FUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODUyMDk3N=
+zIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2ODJf=
+My0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2U%3A%3A%3AaHR0=
+cHM6Ly93d3cuZXhwZWRpYS5jb20vdXNlci9lbWFpbGNsaWNrL2JleC1vY3MvOWxmQVgwbDA0RzR=
+ia19VU25XOUh3UWUzdkktUERaZWdzZGhENEZsZHZRNHV4bzhfd2dRUW5ILUJybVlVWGxlU1g2ME=
+hJVVdINEtFdEJGWXFSZUYyWDRNb3BWTGRWdF9ZM0hWdHlpR3JadUxmMkptXzU2eEpyeWI0YlVhR=
+m53L3RyaXBzLzc0MzQ5NzIwNzg5NTE_ZW1haWw9cmFkdS5leHBlZGlhQG9obWkub3JnJmxhbmdp=
+ZD0xMDMzP3VzZXJUb2tlbj05bGZBWDBsMDRHNGJrX1VTblc5SHdRZTN2SS1QRFplZ3NkaEQ0Rmx=
+kdlE0dXhvOF93Z1FRbkgtQnJtWVVYbGVTWDYwSElVV0g0S0V0QkZZcVJlRjJYNE1vcFZMZFZ0X1=
+kzSFZ0eWlHclp1TGYySm1fNTZ4SnJ5YjRiVWFGbncmRU1MQ0lEPVVTLlBULkVWRU5UVFJJR0dFU=
+kVETUFJTElORy5FTlNQVVJDSEFTRUNPTkZJUk1BVElPTi5GTElHSFQmRU1MRFRMPURBVEUyMDE5=
+MDUxNS1JU1NVWC5TSURYLktFWTk0MDg1MjA5NzcyLlBBSURYLkxBTkdFTl9VUy5NQ0lEWC5URVN=
+UNC5WRVJTWC5NSURTMS0yNTc5M18yLTI5NjgyXzMtMzAxNDBfNC0zMDE0M181LTI5NzI1XzYtMz=
+AxMzZfNy0zMDEzNy5NT0Q5NjQtNTItMS0wLUVNQUlMLUJBTk5FUi1FTi1VU19TMy1QNTRfUE9TM=
+F9JTUczNTc&K=3D1H35E_vTKRH1za7kiquKpQ" target=3D"_blank"><img src=3D"https:=
+//cdn.lemediavault.com/images/e06eb25023bbcc990e3a135b8474aad7.png" alt=3D"=
+Flight Landing" style=3D"display:block;" width=3D"20" height=3D"auto" borde=
+r=3D"0" class=3D""></a></td></tr><!-- *=3D*=3D*=3D* END CB: Image *=3D*=3D*=
+=3D* -->
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Left Content =3D=3D=3D=3D=3D=3D --><!-- =
+=3D=3D=3D=3D=3D START Right Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 0px 0px 5px;" align=
+=3D""
+valign=3D"top">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT RIGHT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:0px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#001959; font-size:14px=
+; line-height:18px; font-weight:normal;" class=3D"appleLinkBodyTxt">4:30pm =
+=E2=80=A2 Toronto, ON, Canada (YYZ-Pearson Intl.)</td></tr><!-- *=3D*=3D*=
+=3D* END CB: Text (unlinked) *=3D*=3D*=3D* -->
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Right Content =3D=3D=3D=3D=3D=3D --></tr>
+</table>
+</td>
+</tr><!-- ........ END DOUBLE COL WRAPPER ........ -->
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D END 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D --></table>
+</td>
+</tr><!-- ........ END SINGLE COL WRAPPER ........ -->
+<!-- *=3D*=3D*=3D* START CB: Text (linked) *=3D*=3D*=3D* --><tr><td bgcolor=
+=3D"#FFFFFF" align=3D"center" valign=3D"" style=3D"padding: 36px 0px 36px 0=
+px;" class=3D""><a alias=3D"Header" href=3D"http://link.expediamail.com/c/4=
+/?T=3DNjQxMjYyODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY=
+0%3AcmFkdS5leHBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVO=
+U1BVUkNIQVNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlN=
+JRFguS0VZOTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRF=
+MxLTI1NzkzXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%=
+3AZmFsc2U%3A%3A%3AaHR0cHM6Ly93d3cuZXhwZWRpYS5jb20vdXNlci9lbWFpbGNsaWNrL2Jle=
+C1vY3MvOWxmQVgwbDA0RzRia19VU25XOUh3UWUzdkktUERaZWdzZGhENEZsZHZRNHV4bzhfd2dR=
+UW5ILUJybVlVWGxlU1g2MEhJVVdINEtFdEJGWXFSZUYyWDRNb3BWTGRWdF9ZM0hWdHlpR3JadUx=
+mMkptXzU2eEpyeWI0YlVhRm53L3RyaXBzLzc0MzQ5NzIwNzg5NTE_ZW1haWw9cmFkdS5leHBlZG=
+lhQG9obWkub3JnJmxhbmdpZD0xMDMzP3VzZXJUb2tlbj05bGZBWDBsMDRHNGJrX1VTblc5SHdRZ=
+TN2SS1QRFplZ3NkaEQ0RmxkdlE0dXhvOF93Z1FRbkgtQnJtWVVYbGVTWDYwSElVV0g0S0V0QkZZ=
+cVJlRjJYNE1vcFZMZFZ0X1kzSFZ0eWlHclp1TGYySm1fNTZ4SnJ5YjRiVWFGbncmRU1MQ0lEPVV=
+TLlBULkVWRU5UVFJJR0dFUkVETUFJTElORy5FTlNQVVJDSEFTRUNPTkZJUk1BVElPTi5GTElHSF=
+QmRU1MRFRMPURBVEUyMDE5MDUxNS1JU1NVWC5TSURYLktFWTk0MDg1MjA5NzcyLlBBSURYLkxBT=
+kdFTl9VUy5NQ0lEWC5URVNUNC5WRVJTWC5NSURTMS0yNTc5M18yLTI5NjgyXzMtMzAxNDBfNC0z=
+MDE0M181LTI5NzI1XzYtMzAxMzZfNy0zMDEzNy5NT0Q5NjQtNTItMS0wLUVNQUlMLUJBTk5FUi1=
+FTi1VU19TMy1QOTRfUE9TMF9MTks3NTc&K=3DH6GTPTrXSyIJ2wM8elwngw" style=3D"font-=
+family: Helvetica, Arial, sans-serif; color:#005aeb; font-size:16px; line-h=
+eight:120%; font-weight:bold; text-decoration:none;" target=3D"_blank" nowr=
+ap=3D"" >MANAGE BOOKING</a></td></tr><!-- *=3D*=3D*=3D* END CB: Text (linke=
+d) *=3D*=3D*=3D* --><!-- ....... START SINGLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D""
+style=3D"padding:16px 16px 16px 16px; border-right: none; border-left: none=
+; border-top: 1px solid #c7c7c7; border-bottom: 0px solid white; border-rad=
+ius:0px 0px 0px 0px; -webkit-border-radius:0px 0px 0px 0px;-moz-border-radi=
+us:0px 0px 0px 0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D START 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:2px 0px 2px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#001959; font-size:16px=
+; line-height:1.3em; font-weight:bold;" class=3D"appleLinkBodyTxt">Traveler=
+ details</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* =
+-->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:8px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#001959; font-size:14px=
+; line-height:1.3em; font-weight:bold;" class=3D"appleLinkBodyTxt">RADU HOC=
+IUNG</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:2px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#465280; font-size:14px=
+; line-height:1.3em; font-weight:normal;" class=3D"appleLinkBodyTxt">No fre=
+quent flyer details provided</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unli=
+nked) *=3D*=3D*=3D* --><!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=
+=3D*=3D* --><tr><td bgcolor=3D"#FFFFFF" align=3D"left" valign=3D"top" style=
+=3D"padding:0px 0px 0px 0px; font-family:Helvetica, Arial, sans-serif; colo=
+r:#465280; font-size:10px; line-height:1.3em; font-weight:normal;" class=3D=
+"appleLinkBodyTxt"> </td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=
+=3D*=3D*=3D* -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:8px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#465280; font-size:12px=
+; line-height:1.3em; font-weight:normal;" class=3D"appleLinkBodyTxt">Freque=
+nt flyer and special assistance requests should be confirmed directly with =
+the airline.</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=
+=3D* -->
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D END 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D --></table>
+</td>
+</tr><!-- ........ END SINGLE COL WRAPPER ........ -->
+<tr><td height=3D"15"></td></tr>
+<!-- ....... START SINGLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D""
+style=3D"padding:16px 16px 0px 16px; border-right: none; border-left: none;=
+ border-top: none; border-bottom: 0px solid #ffffff; border-radius:0px 0px =
+0px 0px; -webkit-border-radius:0px 0px 0px 0px;-moz-border-radius:0px 0px 0=
+px 0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D START 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:20px 0px 0px =
+0px; font-family:Helvetica, Arial, sans-serif; color:#001959; font-size:18p=
+x; line-height:22px; font-weight:bold;" class=3D"appleLinkBodyTxt">Pricing =
+Summary</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* -=
+->
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D END 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D --></table>
+</td>
+</tr><!-- ........ END SINGLE COL WRAPPER ........ -->
+<!-- ....... START SINGLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#ffffff" align=3D"" valign=3D""
+style=3D"padding:8px 16px 0px 16px; border-right: none; border-left: none; =
+border-top: none; border-bottom: none; border-radius:0px 0px 0px 0px; -webk=
+it-border-radius:0px 0px 0px 0px;-moz-border-radius:0px 0px 0px 0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D START 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D -->
+<!-- ....... START DOUBLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D"top"
+style=3D"padding:0px 0px 0px 0px; border-right: none; border-left: none; bo=
+rder-top: none; border-bottom: none; border-radius:0px 0px 0px 0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<tr><!-- =3D=3D=3D=3D=3D START Left Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 5px 0px 0px;" align=
+=3D""
+valign=3D"top" width=3D"70%">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT LEFT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:0px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#001959; font-size:14px=
+; line-height:20px; font-weight:bold;" class=3D"appleLinkBodyTxt">Traveler =
+1: RADU HOCIUNG (Adult)</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked)=
+ *=3D*=3D*=3D* -->
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Left Content =3D=3D=3D=3D=3D=3D --><!-- =
+=3D=3D=3D=3D=3D START Right Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 0px 0px 5px;" align=
+=3D""
+valign=3D"top">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT RIGHT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"right" valign=3D"top" style=3D"padding:0px 0px 0px =
+0px; font-family:Helvetica, Arial, sans-serif; color:#001959; font-size:14p=
+x; line-height:20px; font-weight:bold;" class=3D"appleLinkBodyTxt">$239.06<=
+/td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* -->
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Right Content =3D=3D=3D=3D=3D=3D --></tr>
+</table>
+</td>
+</tr><!-- ........ END DOUBLE COL WRAPPER ........ -->
+<!-- ....... START DOUBLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D"top"
+style=3D"padding:0px 0px 0px 0px; border-right: none; border-left: none; bo=
+rder-top: none; border-bottom: none; border-radius:0px 0px 0px 0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<tr><!-- =3D=3D=3D=3D=3D START Left Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 5px 0px 0px;" align=
+=3D""
+valign=3D"top" width=3D"70%">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT LEFT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:0px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#465280; font-size:14px=
+; line-height:20px; font-weight:normal;" class=3D"appleLinkBodyTxt">Flight<=
+/td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* -->
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Left Content =3D=3D=3D=3D=3D=3D --><!-- =
+=3D=3D=3D=3D=3D START Right Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 0px 0px 5px;" align=
+=3D""
+valign=3D"top">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT RIGHT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"right" valign=3D"top" style=3D"padding:0px 0px 0px =
+0px; font-family:Helvetica, Arial, sans-serif; color:#465280; font-size:14p=
+x; line-height:20px; font-weight:normal;" class=3D"appleLinkBodyTxt">$175.0=
+0</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* -->
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Right Content =3D=3D=3D=3D=3D=3D --></tr>
+</table>
+</td>
+</tr><!-- ........ END DOUBLE COL WRAPPER ........ -->
+<!-- ....... START DOUBLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D"top"
+style=3D"padding:0px 0px 0px 0px; border-right: none; border-left: none; bo=
+rder-top: none; border-bottom: none; border-radius:0px 0px 0px 0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<tr><!-- =3D=3D=3D=3D=3D START Left Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 5px 0px 0px;" align=
+=3D""
+valign=3D"top" width=3D"70%">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT LEFT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:0px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#465280; font-size:14px=
+; line-height:20px; font-weight:normal;" class=3D"appleLinkBodyTxt">Taxes &=
+ fees</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* -->
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Left Content =3D=3D=3D=3D=3D=3D --><!-- =
+=3D=3D=3D=3D=3D START Right Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#FFFFFF" class=3D"" style=3D"padding:0px 0px 0px 5px;" align=
+=3D""
+valign=3D"top">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT RIGHT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"right" valign=3D"top" style=3D"padding:0px 0px 0px =
+0px; font-family:Helvetica, Arial, sans-serif; color:#465280; font-size:14p=
+x; line-height:20px; font-weight:normal;" class=3D"appleLinkBodyTxt">$64.06=
+</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* -->
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Right Content =3D=3D=3D=3D=3D=3D --></tr>
+</table>
+</td>
+</tr><!-- ........ END DOUBLE COL WRAPPER ........ -->
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D END 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D --></table>
+</td>
+</tr><!-- ........ END SINGLE COL WRAPPER ........ -->
+<!-- ....... START SINGLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D""
+style=3D"padding:16px 0px 0px 0px; border-right: none; border-left: none; b=
+order-top: none; border-bottom: none; border-radius:0px 0px 0px 0px; -webki=
+t-border-radius:0px 0px 0px 0px;-moz-border-radius:0px 0px 0px 0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D START 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D -->
+<!-- ....... START SINGLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#f0f6ff" align=3D"" valign=3D""
+style=3D"padding:0px 16px 16px 16px; border-right: none; border-left: none;=
+ border-top: none; border-bottom: none; border-radius:0px 0px 0px 0px; -web=
+kit-border-radius:0px 0px 0px 0px;-moz-border-radius:0px 0px 0px 0px;"
+class=3D"">
+<table bgcolor=3D"#f0f6ff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D START 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D -->
+<!-- ....... START DOUBLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#f0f6ff" align=3D"" valign=3D"top"
+style=3D"padding:16px 0px 0px 0px; border-right: none; border-left: none; b=
+order-top: none; border-bottom: none; border-radius:0px 0px 0px 0px;"
+class=3D"">
+<table bgcolor=3D"#f0f6ff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<tr><!-- =3D=3D=3D=3D=3D START Left Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#f0f6ff" class=3D"" style=3D"padding:0px 5px 0px 0px;" align=
+=3D""
+valign=3D"top" width=3D"70%">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT LEFT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#f0f6ff" align=3D"left" valign=3D"top" style=3D"padding:0px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#001959; font-size:18px=
+; line-height:22px; font-weight:bold;" class=3D"appleLinkBodyTxt">Total</td=
+></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* -->
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Left Content =3D=3D=3D=3D=3D=3D --><!-- =
+=3D=3D=3D=3D=3D START Right Content =3D=3D=3D=3D=3D -->
+<td bgcolor=3D"#f0f6ff" class=3D"" style=3D"padding:0px 0px 0px 5px;" align=
+=3D""
+valign=3D"top">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+<!-- INSERT RIGHT CONTENT HERE -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#f0f6ff" align=3D"right" valign=3D"top" style=3D"padding:0px 0px 0px =
+0px; font-family:Helvetica, Arial, sans-serif; color:#001959; font-size:18p=
+x; line-height:22px; font-weight:bold;" class=3D"appleLinkBodyTxt">$239.06<=
+/td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* -->
+</table>
+</td><!-- =3D=3D=3D=3D=3D=3D END Right Content =3D=3D=3D=3D=3D=3D --></tr>
+</table>
+</td>
+</tr><!-- ........ END DOUBLE COL WRAPPER ........ -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#f0f6ff" align=3D"left" valign=3D"top" style=3D"padding:8px 0px 0px 0=
+px; font-family:Helvetica, Arial, sans-serif; color:#465280; font-size:10px=
+; line-height:12px; font-weight:normal;" class=3D"appleLinkBodyTxt">The tot=
+al price includes all mandatory taxes and fees.</td></tr><!-- *=3D*=3D*=3D*=
+ END CB: Text (unlinked) *=3D*=3D*=3D* --><!-- *=3D*=3D*=3D* START CB: Text=
+ (unlinked) *=3D*=3D*=3D* --><tr><td bgcolor=3D"#f0f6ff" align=3D"left" val=
+ign=3D"top" style=3D"padding:0px 0px 0px 0px; font-family:Helvetica, Arial,=
+ sans-serif; color:#465280; font-size:10px; line-height:12px; font-weight:n=
+ormal;" class=3D"appleLinkBodyTxt">Unless specified otherwise, rates are qu=
+oted in US dollars.</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=
+=3D*=3D*=3D* -->
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D END 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D --></table>
+</td>
+</tr><!-- ........ END SINGLE COL WRAPPER ........ -->
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D END 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D --></table>
+</td>
+</tr><!-- ........ END SINGLE COL WRAPPER ........ -->
+<tr><td height=3D"15"></td></tr>
+<!-- ....... START SINGLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D""
+style=3D"padding:16px 16px 16px 16px; border-right: none; border-left: none=
+; border-top: none; border-bottom: none; border-radius:0px 0px 0px 0px; -we=
+bkit-border-radius:0px 0px 0px 0px;-moz-border-radius:0px 0px 0px 0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D START 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:16px 0px 0px =
+0px; font-family:Helvetica, Arial, sans-serif; color:#001959; font-size:18p=
+x; line-height:22px; font-weight:bold;" class=3D"appleLinkBodyTxt">You stil=
+l have time to protect your trip.</td></tr><!-- *=3D*=3D*=3D* END CB: Text =
+(unlinked) *=3D*=3D*=3D* --><!-- *=3D*=3D*=3D* START CB: Button *=3D*=3D*=
+=3D* --><tr><td align=3D"center" valign=3D"top" bgcolor=3D"#FFFFFF" style=
+=3D"padding: 16px 0px 0px 0px;"><table style=3D"border-collapse: separate;"=
+ align=3D"left" valign=3D"" class=3D"" cellpadding=3D"15" cellspacing=3D"0"=
+><tr><td bgcolor=3D"#005aeb" align=3D"center" style=3D"padding: 15px 30px 1=
+5px 30px; border-radius:2px; -moz-border-radius:2px; -webkit-border-radius:=
+2px;border-top:none; border-bottom:none; border-right:none; border-left:non=
+e;"><a alias=3D"Button" href=3D"http://link.expediamail.com/c/4/?T=3DNjQxMj=
+YyODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5l=
+eHBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNF=
+Q09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQ=
+wODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXz=
+ItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2U%3A=
+%3A%3AaHR0cHM6Ly93d3cuZXhwZWRpYS5jb20vdXNlci9lbWFpbGNsaWNrL2JleC1vY3MvOWxmQ=
+VgwbDA0RzRia19VU25XOUh3UWUzdkktUERaZWdzZGhENEZsZHZRNHV4bzhfd2dRUW5ILUJybVlV=
+WGxlU1g2MEhJVVdINEtFdEJGWXFSZUYyWDRNb3BWTGRWdF9ZM0hWdHlpR3JadUxmMkptXzU2eEp=
+yeWI0YlVhRm53L2luc3VyYW5jZS9wb3N0LXB1cmNoYXNlLz90cmlwSWQ9ODhhODhkYjktNTkzYi=
+00ZmRhLTg5MTEtYjJiODZjNGNiN2JiJnNpdGVJZD0xJkVNTENJRD1VUy5QVC5FVkVOVFRSSUdHR=
+VJFRE1BSUxJTkcuRU5TUFVSQ0hBU0VDT05GSVJNQVRJT04uRkxJR0hUJkVNTERUTD1EQVRFMjAx=
+OTA1MTUtSVNTVVguU0lEWC5LRVk5NDA4NTIwOTc3Mi5QQUlEWC5MQU5HRU5fVVMuTUNJRFguVEV=
+TVDQuVkVSU1guTUlEUzEtMjU3OTNfMi0yOTY4Ml8zLTMwMTQwXzQtMzAxNDNfNS0yOTcyNV82LT=
+MwMTM2XzctMzAxMzcuTU9EOTY2LTktMS0wLUVNQUlMLUJBTk5FUi1FTi1VU19TNS1QMTBfUE9TM=
+F9CVE4zNQ&K=3DmKTdD8-P4XTZ3St67sGY_g" style=3D"font-family: Helvetica, Aria=
+l, sans-serif; color:#ffffff; font-size:14px; font-weight:normal; display:b=
+lock; text-decoration:none;" target=3D"_blank" >PROTECT MY TRIP</a></td></t=
+r></table></td></tr><!-- *=3D*=3D*=3D* END CB: Button *=3D*=3D*=3D* --><!--=
+ *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcolor=
+=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:13px 0px 0px 0p=
+x; font-family:Helvetica, Arial, sans-serif; color:#465280; font-size:12px;=
+ line-height:16px; font-weight:normal;" class=3D"appleLinkBodyTxt">Expires =
+24 hours after confirmation of flight booking.</td></tr><!-- *=3D*=3D*=3D* =
+END CB: Text (unlinked) *=3D*=3D*=3D* -->
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D END 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D --></table>
+</td>
+</tr><!-- ........ END SINGLE COL WRAPPER ........ -->
+<tr><td height=3D"15"></td></tr>
+<!-- ....... START SINGLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D""
+style=3D"padding:0px 0px 0px 0px; border-right: none; border-left: none; bo=
+rder-top: none; border-bottom: 1px solid #e0e0e0; border-radius:0px 0px 0px=
+ 0px; -webkit-border-radius:0px 0px 0px 0px;-moz-border-radius:0px 0px 0px =
+0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D START 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:16px 16px 0px=
+ 16px; font-family:Helvetica, Arial, sans-serif; color:#001959; font-size:1=
+8px; line-height:22px; font-weight:bold;" class=3D"appleLinkBodyTxt">Additi=
+onal information</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=
+=3D*=3D* -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:8px 16px 0px =
+16px; font-family:Helvetica, Arial, sans-serif; color:#001959; font-size:14=
+px; line-height:18px; font-weight:bold;" class=3D"appleLinkBodyTxt">Departi=
+ng flight =E2=80=A2 CUN to YYZ</td></tr><!-- *=3D*=3D*=3D* END CB: Text (un=
+linked) *=3D*=3D*=3D* -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:8px 16px 0px =
+16px; font-family:Helvetica, Arial, sans-serif; color:#001959; font-size:12=
+px; line-height:16px; font-weight:bold;" class=3D"appleLinkBodyTxt">Additio=
+nal fees</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* =
+--><!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bg=
+color=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:4px 16px 0=
+px 16px; font-family:Helvetica, Arial, sans-serif; color:#465280; font-size=
+:12px; line-height:16px; font-weight:normal;" class=3D"appleLinkBodyTxt">Th=
+e airline may charge <a href=3D"http://link.expediamail.com/c/4/?T=3DNjQxMj=
+YyODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5l=
+eHBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNF=
+Q09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQ=
+wODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXz=
+ItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2U%3A=
+%3A%3AaHR0cHM6Ly93d3cuZXhwZWRpYS5jb20vdXNlci9lbWFpbGNsaWNrL2JleC1vY3MvOWxmQ=
+VgwbDA0RzRia19VU25XOUh3UWUzdkktUERaZWdzZGhENEZsZHZRNHV4bzhfd2dRUW5ILUJybVlV=
+WGxlU1g2MEhJVVdINEtFdEJGWXFSZUYyWDRNb3BWTGRWdF9ZM0hWdHlpR3JadUxmMkptXzU2eEp=
+yeWI0YlVhRm53L0ZsaWdodHMtQmFnRmVlcz9vcmlnaW5hcHQ9Q1VOJmRlc3RpbmF0aW9uYXB0PV=
+lZWiZjYWJpbmNsYXNzPTMmbWt0Z2NhcnJpZXI9VUEmb3BjYXJyaWVyPVVBJmZhcmViYXNpcz1UT=
+kowQTlFTiZib29raW5nY2xhc3M9VCZ0cmF2ZWxEYXRlPTIwMTktMDUtMjEmZmxpZ2h0TnVtYmVy=
+PTEwMTEmRU1MQ0lEPVVTLlBULkVWRU5UVFJJR0dFUkVETUFJTElORy5FTlNQVVJDSEFTRUNPTkZ=
+JUk1BVElPTi5GTElHSFQmRU1MRFRMPURBVEUyMDE5MDUxNS1JU1NVWC5TSURYLktFWTk0MDg1Mj=
+A5NzcyLlBBSURYLkxBTkdFTl9VUy5NQ0lEWC5URVNUNC5WRVJTWC5NSURTMS0yNTc5M18yLTI5N=
+jgyXzMtMzAxNDBfNC0zMDE0M181LTI5NzI1XzYtMzAxMzZfNy0zMDEzNy5NT0Q5NjctMTQtMS0w=
+LUVNQUlMLUJBTk5FUi1FTi1VU19TNl9QT1MwX1RYVDg4&K=3DvpYxTYxSFNoE518MHwXodQ" ta=
+rget=3D"rulesAndRestrictions">additional fees <span class=3D"icon icon-popu=
+p tooltip" aria-hidden=3D"true"> </span><span class=3D"visually-hidden alt"=
+>(Opens in a new window.)</span></a> for checked baggage or other optional =
+services.</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D*=
+ --><!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td b=
+gcolor=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:16px 16px=
+ 0px 16px; font-family:Helvetica, Arial, sans-serif; color:#001959; font-si=
+ze:12px; line-height:16px; font-weight:bold;" class=3D"appleLinkBodyTxt">Ai=
+rline rules and restrictions</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unli=
+nked) *=3D*=3D*=3D* --><!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=
+=3D*=3D* --><tr><td bgcolor=3D"#FFFFFF" align=3D"left" valign=3D"top" style=
+=3D"padding:4px 16px 0px 16px; font-family:Helvetica, Arial, sans-serif; co=
+lor:#465280; font-size:12px; line-height:16px; font-weight:normal;" class=
+=3D"appleLinkBodyTxt">We understand that sometimes plans change. We do not =
+charge a cancel or change fee. When the airline charges such fees in accord=
+ance with its own policies, the cost will be passed on to you.</td></tr><!-=
+- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* --><!-- *=3D*=3D*=3D*=
+ START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcolor=3D"#FFFFFF" ali=
+gn=3D"left" valign=3D"top" style=3D"padding:8px 16px 0px 16px; font-family:=
+Helvetica, Arial, sans-serif; color:#465280; font-size:12px; line-height:16=
+px; font-weight:bold;" class=3D"appleLinkBodyTxt">Tickets are nonrefundable=
+ and nontransferable.</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=
+=3D*=3D*=3D* --><!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* =
+--><tr><td bgcolor=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"paddi=
+ng:8px 16px 0px 16px; font-family:Helvetica, Arial, sans-serif; color:#4652=
+80; font-size:12px; line-height:16px; font-weight:normal;" class=3D"appleLi=
+nkBodyTxt">Please read the <a id=3D"complete_penalty_rules_for_changes_and_=
+cancellations_link" href=3D"http://link.expediamail.com/c/4/?T=3DNjQxMjYyOD=
+E%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5leHBl=
+ZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09O=
+RklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODU=
+yMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMj=
+k2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2U%3A%3A%=
+3AaHR0cHM6Ly93d3cuZXhwZWRpYS5jb20vdXNlci9lbWFpbGNsaWNrL2JleC1vY3MvOWxmQVgwb=
+DA0RzRia19VU25XOUh3UWUzdkktUERaZWdzZGhENEZsZHZRNHV4bzhfd2dRUW5ILUJybVlVWGxl=
+U1g2MEhJVVdINEtFdEJGWXFSZUYyWDRNb3BWTGRWdF9ZM0hWdHlpR3JadUxmMkptXzU2eEpyeWI=
+0YlVhRm53L0ZhcmUtUnVsZXM_dHJpcGlkPTg4YTg4ZGI5LTU5M2ItNGZkYS04OTExLWIyYjg2Yz=
+RjYjdiYiZFTUxDSUQ9VVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09OR=
+klSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODUy=
+MDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk=
+2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3Lk1PRDk2Ny0xNC0xLT=
+AtRU1BSUwtQkFOTkVSLUVOLVVTX1M2X1BPUzBfVFhUNTU&K=3Ddxecik4hd3QcpRyvmfglBw" t=
+arget=3D"rulesAndRestrictions">complete penalty rules for changes and cance=
+llations <span class=3D"icon icon-popup tooltip" aria-hidden=3D"true"> </sp=
+an><span class=3D"visually-hidden alt">(Opens in a new window.)</span></a> =
+applicable to this fare.</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked=
+) *=3D*=3D*=3D* --><!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=
+=3D* --><tr><td bgcolor=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"=
+padding:8px 16px 0px 16px; font-family:Helvetica, Arial, sans-serif; color:=
+#465280; font-size:12px; line-height:16px; font-weight:normal;" class=3D"ap=
+pleLinkBodyTxt">Please read important information regarding <a id=3D"airlin=
+e_liability_limitations_link" href=3D"http://link.expediamail.com/c/4/?T=3D=
+NjQxMjYyODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3Acm=
+FkdS5leHBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUk=
+NIQVNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS=
+0VZOTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1=
+NzkzXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFs=
+c2U%3A%3A%3AaHR0cHM6Ly93d3cuZXhwZWRpYS5jb20vdXNlci9lbWFpbGNsaWNrL2JleC1vY3M=
+vOWxmQVgwbDA0RzRia19VU25XOUh3UWUzdkktUERaZWdzZGhENEZsZHZRNHV4bzhfd2dRUW5ILU=
+JybVlVWGxlU1g2MEhJVVdINEtFdEJGWXFSZUYyWDRNb3BWTGRWdF9ZM0hWdHlpR3JadUxmMkptX=
+zU2eEpyeWI0YlVhRm53L3AvaW5mby1tYWluL3dhcnNhdz9FTUxDSUQ9VVMuUFQuRVZFTlRUUklH=
+R0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTI=
+wMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLl=
+RFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfN=
+i0zMDEzNl83LTMwMTM3Lk1PRDk2Ny0xNC0xLTAtRU1BSUwtQkFOTkVSLUVOLVVTX1M2X1BPUzBf=
+VFhUNTY&K=3DHZSOL19llrWhzjEdhtZPDg" target=3D"rulesAndRestrictions">airline=
+ liability limitations <span class=3D"icon icon-popup tooltip" aria-hidden=
+=3D"true"> </span><span class=3D"visually-hidden alt">(Opens in a new windo=
+w.)</span></a>.</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=
+=3D*=3D* --><!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><=
+tr><td bgcolor=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:1=
+6px 16px 0px 16px; font-family:Helvetica, Arial, sans-serif; color:#001959;=
+ font-size:12px; line-height:16px; font-weight:bold;" class=3D"appleLinkBod=
+yTxt">Fare rules</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=
+=3D*=3D* --><!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><=
+tr><td bgcolor=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:4=
+px 16px 16px 16px; font-family:Helvetica, Arial, sans-serif; color:#465280;=
+ font-size:12px; line-height:16px; font-weight:normal;" class=3D"appleLinkB=
+odyTxt">See more information about <a alias=3D"fare rules" href=3D"http://l=
+ink.expediamail.com/c/4/?T=3DNjQxMjYyODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRl=
+NGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5leHBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUU=
+klHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFU=
+RTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSUR=
+YLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3Mj=
+VfNi0zMDEzNl83LTMwMTM3%3AZmFsc2U%3A%3A%3AaHR0cHM6Ly9leHBlZGlhLmNvbS91c2VyL2=
+VtYWlsY2xpY2svYmV4LW9jcy85bGZBWDBsMDRHNGJrX1VTblc5SHdRZTN2SS1QRFplZ3NkaEQ0R=
+mxkdlE0dXhvOF93Z1FRbkgtQnJtWVVYbGVTWDYwSElVV0g0S0V0QkZZcVJlRjJYNE1vcFZMZFZ0=
+X1kzSFZ0eWlHclp1TGYySm1fNTZ4SnJ5YjRiVWFGbnc_RU1MQ0lEPVVTLlBULkVWRU5UVFJJR0d=
+FUkVETUFJTElORy5FTlNQVVJDSEFTRUNPTkZJUk1BVElPTi5GTElHSFQmRU1MRFRMPURBVEUyMD=
+E5MDUxNS1JU1NVWC5TSURYLktFWTk0MDg1MjA5NzcyLlBBSURYLkxBTkdFTl9VUy5NQ0lEWC5UR=
+VNUNC5WRVJTWC5NSURTMS0yNTc5M18yLTI5NjgyXzMtMzAxNDBfNC0zMDE0M181LTI5NzI1XzYt=
+MzAxMzZfNy0zMDEzNy5NT0Q5NjctMTQtMS0wLUVNQUlMLUJBTk5FUi1FTi1VU19TNl9QT1MwX1R=
+YVDU4&K=3DV5sX8TkSTa2I7E1AWaM0wA" style=3D"color:#005aeb; text-decoration:n=
+one;">fare rules</a>.</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=
+=3D*=3D*=3D* --> <!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D*=
+ --><tr><td bgcolor=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padd=
+ing:2px 0px 0px 0px; font-family:Helvetica, Arial, sans-serif; color:#00195=
+9; font-size:14px; line-height:18px; font-weight:bold;" class=3D"appleLinkB=
+odyTxt"> </td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D*=
+ -->
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D END 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D --></table>
+</td>
+</tr><!-- ........ END SINGLE COL WRAPPER ........ -->
+<tr><td height=3D"15"></td></tr>
+<!-- ....... START SINGLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#ffffff" align=3D"" valign=3D""
+style=3D"padding:4px 0px 4px 0px; border-right: none; border-left: none; bo=
+rder-top: none; border-bottom: none; border-radius:0px 0px 0px 0px; -webkit=
+-border-radius:0px 0px 0px 0px;-moz-border-radius:0px 0px 0px 0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D START 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D -->
+<!-- ....... START SINGLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D""
+style=3D"padding:16px 0px 16px 0px; border-right: none; border-left: none; =
+border-top: none; border-bottom: 1px solid #C7C7C7; border-radius:0px 0px 0=
+px 0px; -webkit-border-radius:0px 0px 0px 0px;-moz-border-radius:0px 0px 0p=
+x 0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D START 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:0px 16px 0px =
+16px; font-family:Helvetica, Arial, sans-serif; color:#001959; font-size:18=
+px; line-height:22px; font-weight:bold;" class=3D"appleLinkBodyTxt">We're h=
+ere to help</td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=
+=3D* --><!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><=
+td bgcolor=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:16px =
+16px 0px 16px; font-family:Helvetica, Arial, sans-serif; color:#001959; fon=
+t-size:14px; line-height:18px; font-weight:normal;" class=3D"appleLinkBodyT=
+xt"><a href=3D"http://link.expediamail.com/c/4/?T=3DNjQxMjYyODE%3AMDItYzE5M=
+TM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5leHBlZGlhQG9obWkub=
+3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORklSTUFUSU9OL=
+kZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODUyMDk3NzIuUEFJ=
+RFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2ODJfMy0zMDE=
+0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2U%3A%3A%3AaHR0cHM6Ly9=
+3d3cuZXhwZWRpYS5jb20vdXNlci9lbWFpbGNsaWNrL2JleC1vY3MvOWxmQVgwbDA0RzRia19VU2=
+5XOUh3UWUzdkktUERaZWdzZGhENEZsZHZRNHV4bzhfd2dRUW5ILUJybVlVWGxlU1g2MEhJVVdIN=
+EtFdEJGWXFSZUYyWDRNb3BWTGRWdF9ZM0hWdHlpR3JadUxmMkptXzU2eEpyeWI0YlVhRm53L3Ry=
+aXBzLzc0MzQ5NzIwNzg5NTE_ZW1haWw9cmFkdS5leHBlZGlhQG9obWkub3JnJmxhbmdpZD0xMDM=
+zP3VzZXJUb2tlbj05bGZBWDBsMDRHNGJrX1VTblc5SHdRZTN2SS1QRFplZ3NkaEQ0RmxkdlE0dX=
+hvOF93Z1FRbkgtQnJtWVVYbGVTWDYwSElVV0g0S0V0QkZZcVJlRjJYNE1vcFZMZFZ0X1kzSFZ0e=
+WlHclp1TGYySm1fNTZ4SnJ5YjRiVWFGbncmRU1MQ0lEPVVTLlBULkVWRU5UVFJJR0dFUkVETUFJ=
+TElORy5FTlNQVVJDSEFTRUNPTkZJUk1BVElPTi5GTElHSFQmRU1MRFRMPURBVEUyMDE5MDUxNS1=
+JU1NVWC5TSURYLktFWTk0MDg1MjA5NzcyLlBBSURYLkxBTkdFTl9VUy5NQ0lEWC5URVNUNC5WRV=
+JTWC5NSURTMS0yNTc5M18yLTI5NjgyXzMtMzAxNDBfNC0zMDE0M181LTI5NzI1XzYtMzAxMzZfN=
+y0zMDEzNy5NT0Q5NjgtMTEtMS0wLUVNQUlMLUJBTk5FUi1FTi1VU19TN19QT1MwX1RYVDQ&K=3D=
+eLA2U25h_WZS70A0xcyjkg" class=3D"ng-scope" style=3D"color:#005aeb; text-dec=
+oration:none; font-weight: normal">Change</a> or <a href=3D"http://link.exp=
+ediamail.com/c/4/?T=3DNjQxMjYyODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmU=
+zMjE0OGJlZjBiZTY0%3AcmFkdS5leHBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VS=
+RURNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTk=
+wNTE1LUlTU1VYLlNJRFguS0VZOTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1=
+Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zM=
+DEzNl83LTMwMTM3%3AZmFsc2U%3A%3A%3AaHR0cHM6Ly93d3cuZXhwZWRpYS5jb20vdXNlci9lb=
+WFpbGNsaWNrL2JleC1vY3MvOWxmQVgwbDA0RzRia19VU25XOUh3UWUzdkktUERaZWdzZGhENEZs=
+ZHZRNHV4bzhfd2dRUW5ILUJybVlVWGxlU1g2MEhJVVdINEtFdEJGWXFSZUYyWDRNb3BWTGRWdF9=
+ZM0hWdHlpR3JadUxmMkptXzU2eEpyeWI0YlVhRm53L3RyaXBzLzc0MzQ5NzIwNzg5NTE_ZW1haW=
+w9cmFkdS5leHBlZGlhQG9obWkub3JnJmxhbmdpZD0xMDMzP3VzZXJUb2tlbj05bGZBWDBsMDRHN=
+GJrX1VTblc5SHdRZTN2SS1QRFplZ3NkaEQ0RmxkdlE0dXhvOF93Z1FRbkgtQnJtWVVYbGVTWDYw=
+SElVV0g0S0V0QkZZcVJlRjJYNE1vcFZMZFZ0X1kzSFZ0eWlHclp1TGYySm1fNTZ4SnJ5YjRiVWF=
+GbncmRU1MQ0lEPVVTLlBULkVWRU5UVFJJR0dFUkVETUFJTElORy5FTlNQVVJDSEFTRUNPTkZJUk=
+1BVElPTi5GTElHSFQmRU1MRFRMPURBVEUyMDE5MDUxNS1JU1NVWC5TSURYLktFWTk0MDg1MjA5N=
+zcyLlBBSURYLkxBTkdFTl9VUy5NQ0lEWC5URVNUNC5WRVJTWC5NSURTMS0yNTc5M18yLTI5Njgy=
+XzMtMzAxNDBfNC0zMDE0M181LTI5NzI1XzYtMzAxMzZfNy0zMDEzNy5NT0Q5NjgtMTEtMS0wLUV=
+NQUlMLUJBTk5FUi1FTi1VU19TN19QT1MwX1RYVDQ&K=3DeLA2U25h_WZS70A0xcyjkg" class=
+=3D"ng-scope" style=3D"color:#005aeb; text-decoration:none; font-weight: no=
+rmal">cancel</a> this booking.</td></tr><!-- *=3D*=3D*=3D* END CB: Text (un=
+linked) *=3D*=3D*=3D* --><!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=
+=3D*=3D* --><tr><td bgcolor=3D"#FFFFFF" align=3D"left" valign=3D"top" style=
+=3D"padding:8px 16px 0px 16px; font-family:Helvetica, Arial, sans-serif; co=
+lor:#465280; font-size:14px; line-height:18px; font-weight:bold;" class=3D"=
+appleLinkBodyTxt">Expedia Itinerary: <a alias=3D"Expedia itinerary" href=3D=
+"http://link.expediamail.com/c/4/?T=3DNjQxMjYyODE%3AMDItYzE5MTM1LTYxMTJiNDZ=
+hMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5leHBlZGlhQG9obWkub3Jn%3AVVMuUFQu=
+RVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUx=
+EVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1=
+VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzX=
+zUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2U%3A%3A%3AaHR0cHM6Ly93d3cuZXhwZWRpY=
+S5jb20vdXNlci9lbWFpbGNsaWNrL2JleC1vY3MvOWxmQVgwbDA0RzRia19VU25XOUh3UWUzdkkt=
+UERaZWdzZGhENEZsZHZRNHV4bzhfd2dRUW5ILUJybVlVWGxlU1g2MEhJVVdINEtFdEJGWXFSZUY=
+yWDRNb3BWTGRWdF9ZM0hWdHlpR3JadUxmMkptXzU2eEpyeWI0YlVhRm53L3RyaXBzLzc0MzQ5Nz=
+IwNzg5NTE_ZW1haWw9cmFkdS5leHBlZGlhQG9obWkub3JnJmxhbmdpZD0xMDMzP3VzZXJUb2tlb=
+j05bGZBWDBsMDRHNGJrX1VTblc5SHdRZTN2SS1QRFplZ3NkaEQ0RmxkdlE0dXhvOF93Z1FRbkgt=
+QnJtWVVYbGVTWDYwSElVV0g0S0V0QkZZcVJlRjJYNE1vcFZMZFZ0X1kzSFZ0eWlHclp1TGYySm1=
+fNTZ4SnJ5YjRiVWFGbncmRU1MQ0lEPVVTLlBULkVWRU5UVFJJR0dFUkVETUFJTElORy5FTlNQVV=
+JDSEFTRUNPTkZJUk1BVElPTi5GTElHSFQmRU1MRFRMPURBVEUyMDE5MDUxNS1JU1NVWC5TSURYL=
+ktFWTk0MDg1MjA5NzcyLlBBSURYLkxBTkdFTl9VUy5NQ0lEWC5URVNUNC5WRVJTWC5NSURTMS0y=
+NTc5M18yLTI5NjgyXzMtMzAxNDBfNC0zMDE0M181LTI5NzI1XzYtMzAxMzZfNy0zMDEzNy5NT0Q=
+5NjgtMTEtMS0wLUVNQUlMLUJBTk5FUi1FTi1VU19TN19QT1MwX1RYVDEy&K=3DLHi2_Wypcf5si=
+KRzZS9vhg" style=3D"color:#005aeb; text-decoration:none; font-weight: norma=
+l">7434972078951</a></td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=
+=3D*=3D*=3D* -->
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D END 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D --></table>
+</td>
+</tr><!-- ........ END SINGLE COL WRAPPER ........ -->
+<!-- ....... START SINGLE COL WRAPPER ....... -->
+<tr>
+<td bgcolor=3D"#FFFFFF" align=3D"" valign=3D""
+style=3D"padding:0px 0px 16px 0px; border-right: none; border-left: none; b=
+order-top: none; border-bottom: none; border-radius:0px 0px 0px 0px; -webki=
+t-border-radius:0px 0px 0px 0px;-moz-border-radius:0px 0px 0px 0px;"
+class=3D"">
+<table bgcolor=3D"#ffffff" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D START 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D -->
+<!-- *=3D*=3D*=3D* START CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcol=
+or=3D"#FFFFFF" align=3D"left" valign=3D"top" style=3D"padding:16px 16px 0px=
+ 16px; font-family:Helvetica, Arial, sans-serif; color:#001959; font-size:1=
+4px; line-height:18px; font-weight:normal;" class=3D"appleLinkBodyTxt">Cont=
+act Expedia if you need help managing this itinerary.</td></tr><!-- *=3D*=
+=3D*=3D* END CB: Text (unlinked) *=3D*=3D*=3D* --><!-- *=3D*=3D*=3D* START =
+CB: Text (unlinked) *=3D*=3D*=3D* --><tr><td bgcolor=3D"#FFFFFF" align=3D"l=
+eft" valign=3D"top" style=3D"padding:8px 16px 0px 16px; font-family:Helveti=
+ca, Arial, sans-serif; color:#465280; font-size:14px; line-height:18px; fon=
+t-weight:normal;" class=3D"appleLinkBodyTxt"><a alias=3D"Expedia customer s=
+upport" href=3D"http://link.expediamail.com/c/4/?T=3DNjQxMjYyODE%3AMDItYzE5=
+MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5leHBlZGlhQG9obWku=
+b3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORklSTUFUSU9O=
+LkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODUyMDk3NzIuUEF=
+JRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2ODJfMy0zMD=
+E0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2U%3A%3A%3AaHR0cHM6Ly=
+93d3cuZXhwZWRpYS5jb20vdXNlci9lbWFpbGNsaWNrL2JleC1vY3MvOWxmQVgwbDA0RzRia19VU=
+25XOUh3UWUzdkktUERaZWdzZGhENEZsZHZRNHV4bzhfd2dRUW5ILUJybVlVWGxlU1g2MEhJVVdI=
+NEtFdEJGWXFSZUYyWDRNb3BWTGRWdF9ZM0hWdHlpR3JadUxmMkptXzU2eEpyeWI0YlVhRm53L3N=
+lcnZpY2UvP0VNTENJRD1VUy5QVC5FVkVOVFRSSUdHRVJFRE1BSUxJTkcuRU5TUFVSQ0hBU0VDT0=
+5GSVJNQVRJT04uRkxJR0hUJkVNTERUTD1EQVRFMjAxOTA1MTUtSVNTVVguU0lEWC5LRVk5NDA4N=
+TIwOTc3Mi5QQUlEWC5MQU5HRU5fVVMuTUNJRFguVEVTVDQuVkVSU1guTUlEUzEtMjU3OTNfMi0y=
+OTY4Ml8zLTMwMTQwXzQtMzAxNDNfNS0yOTcyNV82LTMwMTM2XzctMzAxMzcuTU9EOTY4LTExLTE=
+tMC1FTUFJTC1CQU5ORVItRU4tVVNfUzdfUE9TMF9UWFQ1&K=3DGA0wU3aZw2mSFrwhgdV0Yw" s=
+tyle=3D"color:#005aeb; text-decoration:none; font-weight: normal">Expedia c=
+ustomer support</a></td></tr><!-- *=3D*=3D*=3D* END CB: Text (unlinked) *=
+=3D*=3D*=3D* -->
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D END 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D --></table>
+</td>
+</tr><!-- ........ END SINGLE COL WRAPPER ........ -->
+<!-- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D END 1 Col Content =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D --></table>
+</td>
+</tr><!-- ........ END SINGLE COL WRAPPER ........ -->
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--/\/\-------- END Email Body --------/\/\-->
+<!--/\/\-------- Start REWARDS APP Banner --------/\/\-->
+<tr>
+<td bgcolor=3D"#ededed" align=3D"center" valign=3D"top" style=3D"padding: 1=
+0px 10px 10px 10px; ">
+<!-- ####### Start: Mobile App Banner ####### -->
+<table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0">
+<tr>
+<td width=3D"100%" align=3D"center" valign=3D"middle" style=3D" padding: 0p=
+x 0px 0x 0px;" >
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+<tr>
+<td align=3D"center" valign=3D"middle" style=3D" padding: 5px 10px 5px 10px=
+;" class=3D"SplitRFDText"><a href=3D"http://link.expediamail.com/c/4/?T=3DN=
+jQxMjYyODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmF=
+kdS5leHBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkN=
+IQVNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0=
+VZOTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1N=
+zkzXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc=
+2U%3A%3A%3AaHR0cHM6Ly8xNzI3MTAubWVhc3VyZW1lbnRhcGkuY29tL3NlcnZlP2FjdGlvbj1j=
+bGljayZwdWJsaXNoZXJfaWQ9MTcyNzEwJnNpdGVfaWRfaW9zPTEwMjcxMiZzaXRlX2lkX2FuZHJ=
+vaWQ9MTA3NjcmYWdlbmN5X2lkPTEwMzQmbXlfYWQ9RU1MLiArIE9tbml0dXJlVjYmRU1MQ0lEPV=
+VTLlBULkVWRU5UVFJJR0dFUkVETUFJTElORy5FTlNQVVJDSEFTRUNPTkZJUk1BVElPTi5GTElHS=
+FQmRU1MRFRMPURBVEUyMDE5MDUxNS1JU1NVWC5TSURYLktFWTk0MDg1MjA5NzcyLlBBSURYLkxB=
+TkdFTl9VUy5NQ0lEWC5URVNUNC5WRVJTWC5NSURTMS0yNTc5M18yLTI5NjgyXzMtMzAxNDBfNC0=
+zMDE0M181LTI5NzI1XzYtMzAxMzZfNy0zMDEzNw&K=3DqCUNdwpNEkagiKge_NvsUA" alias=
+=3D"Book the App" target=3D"_blank" style=3D"font-family: Helvetica, Arial,=
+ sans-serif; font-size:13px; color:#6b6b6b; line-height:110%; text-decorati=
+on:none;" >Download our FREE mobile app</a></td>
+</tr>
+<tr>
+<td width=3D"100%" align=3D"center" valign=3D"middle" style=3D" padding: 0p=
+x 0px 0px 0px;" >
+<table valign=3D"top" align=3D"center" border=3D"0" cellspacing=3D"0" cellp=
+adding=3D"0">
+<tr>
+<td width=3D"95" align=3D"right" valign=3D"middle" style=3D"padding:5px 5px=
+ 5px 5px ; ">
+<a alias=3D"Mobile App Apple" href=3D"https://172710.measurementapi.com/ser=
+ve?action=3Dclick&publisher_id=3D172710&site_id=3D102712&agency_id=3D1034&m=
+y_site=3DGENERIC&my_adgroup=3DTRIGGERED&my_ad=3DEML.EMLCID=3DUS.PT.EVENTTRI=
+GGEREDMAILING.ENSPURCHASECONFIRMATION.FLIGHT&EMLDTL=3DDATE20190515-ISSUX.SI=
+DX.KEY94085209772.PAIDX.LANGEN_US.MCIDX.TEST4.VERSX.MIDS1-25793_2-29682_3-3=
+0140_4-30143_5-29725_6-30136_7-30137&my_placement=3DTRIGGEREDEMAIL" target=
+=3D"_blank" ><img src=3D"https://images.trvl-media.com/media/content/expus/=
+email/wrapper/app/ios/app_ios_en_95x28.png" width=3D"95" alt=3D"Expedia App=
+" border=3D"0" style=3D"font-family: Helvetica, Arial, sans-serif; font-siz=
+e:17px; color:#083360; display:block; -ms-interpolation-mode: bicubic;"/></=
+a></td>
+<td width=3D"95" align=3D"left" valign=3D"middle" style=3D"padding:5px 5px =
+5px 5px ; ">
+<a alias=3D"Mobile App Google" href=3D"https://172710.measurementapi.com/se=
+rve?action=3Dclick&publisher_id=3D172710&site_id=3D107678&agency_id=3D1034&=
+my_site=3DGENERIC&my_adgroup=3DTRIGGERED&my_ad=3DEML.EMLCID=3DUS.PT.EVENTTR=
+IGGEREDMAILING.ENSPURCHASECONFIRMATION.FLIGHT&EMLDTL=3DDATE20190515-ISSUX.S=
+IDX.KEY94085209772.PAIDX.LANGEN_US.MCIDX.TEST4.VERSX.MIDS1-25793_2-29682_3-=
+30140_4-30143_5-29725_6-30136_7-30137&my_placement=3DTRIGGEREDEMAIL" target=
+=3D"_blank" ><img src=3D"https://images.trvl-media.com/media/content/expus/=
+email/wrapper/us-en/expediaapp_android_95x28.png" width=3D"95" alt=3D"Exped=
+ia App" border=3D"0" style=3D"font-family: Helvetica, Arial, sans-serif; fo=
+nt-size:17px; color:#083360; display:block; -ms-interpolation-mode: bicubic=
+;"/></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<!-- ######## End: Mobile App Banner ######## -->
+</td>
+</tr>
+<!--/\/\-------- End REWARDS APP Banner --------/\/\-->
+<!--/\/\-------- Removing Chrome Banner according to RMS-26999 --------/\/\=
+-->
+<!--/\/\-------- End crm Banner --------/\/\-->
+<!--/\/\-------- Start Social --------/\/\-->
+<tr>
+<td bgcolor=3D"#ededed" valign=3D"top" align=3D"center" style=3D"padding: 1=
+0px 20px 10px 20px; ">
+<!-- ####### Start: Social ####### -->
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" align=3D"center" va=
+lign=3D"middle" >
+<tr>
+<td align=3D"left" valign=3D"middle" style=3D"padding:0px 0px 0px 0px;" wid=
+th=3D"26">
+<a alias=3D"facebook" href=3D"http://link.expediamail.com/c/4/?T=3DNjQxMjYy=
+ODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5leH=
+BlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ0=
+9ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwO=
+DUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzIt=
+Mjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2U%3A%3=
+A%3AaHR0cHM6Ly93d3cuZmFjZWJvb2suY29tL2V4cGVkaWE_RU1MQ0lEPVVTLlBULkVWRU5UVFJ=
+JR0dFUkVETUFJTElORy5FTlNQVVJDSEFTRUNPTkZJUk1BVElPTi5GTElHSFQmRU1MRFRMPURBVE=
+UyMDE5MDUxNS1JU1NVWC5TSURYLktFWTk0MDg1MjA5NzcyLlBBSURYLkxBTkdFTl9VUy5NQ0lEW=
+C5URVNUNC5WRVJTWC5NSURTMS0yNTc5M18yLTI5NjgyXzMtMzAxNDBfNC0zMDE0M181LTI5NzI1=
+XzYtMzAxMzZfNy0zMDEzNw&K=3Dzq5zc5_29ElRD_4-5FN6QQ" ><img src=3D"https://ima=
+ges.trvl-media.com/media/content/expus/email/wrapper/icons/facebook_26x26.p=
+ng" alt=3D"Facebook" width=3D"26" height=3D"26" border=3D"0" style=3D"displ=
+ay:block;"></a>
+</td>
+<td align=3D"right" valign=3D"middle" style=3D"padding:0px 0px 0px 0px;" wi=
+dth=3D"40">
+<a alias=3D"twitter" href=3D"http://link.expediamail.com/c/4/?T=3DNjQxMjYyO=
+DE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5leHB=
+lZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09=
+ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwOD=
+UyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItM=
+jk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2U%3A%3A=
+%3AaHR0cHM6Ly90d2l0dGVyLmNvbS9leHBlZGlhP0VNTENJRD1VUy5QVC5FVkVOVFRSSUdHRVJF=
+RE1BSUxJTkcuRU5TUFVSQ0hBU0VDT05GSVJNQVRJT04uRkxJR0hUJkVNTERUTD1EQVRFMjAxOTA=
+1MTUtSVNTVVguU0lEWC5LRVk5NDA4NTIwOTc3Mi5QQUlEWC5MQU5HRU5fVVMuTUNJRFguVEVTVD=
+QuVkVSU1guTUlEUzEtMjU3OTNfMi0yOTY4Ml8zLTMwMTQwXzQtMzAxNDNfNS0yOTcyNV82LTMwM=
+TM2XzctMzAxMzc&K=3D6zk-YHr_alL0iwnOKtvYiA" ><img src=3D"https://images.trvl=
+-media.com/media/content/expus/email/wrapper/icons/twitter_ed_32x26.png" al=
+t=3D"Twitter" width=3D"30" height=3D"26" border=3D"0" style=3D"display:bloc=
+k;"></a>
+</td>
+<td align=3D"right" valign=3D"middle" style=3D"padding:0px 0px 0px 0px;" wi=
+dth=3D"36">
+<a alias=3D"google plus" href=3D"http://link.expediamail.com/c/4/?T=3DNjQxM=
+jYyODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5=
+leHBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVN=
+FQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOT=
+QwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzX=
+zItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2U%3=
+A%3A%3AaHR0cHM6Ly9wbHVzLmdvb2dsZS5jb20vK0V4cGVkaWEvcG9zdHM_RU1MQ0lEPVVTLlBU=
+LkVWRU5UVFJJR0dFUkVETUFJTElORy5FTlNQVVJDSEFTRUNPTkZJUk1BVElPTi5GTElHSFQmRU1=
+MRFRMPURBVEUyMDE5MDUxNS1JU1NVWC5TSURYLktFWTk0MDg1MjA5NzcyLlBBSURYLkxBTkdFTl=
+9VUy5NQ0lEWC5URVNUNC5WRVJTWC5NSURTMS0yNTc5M18yLTI5NjgyXzMtMzAxNDBfNC0zMDE0M=
+181LTI5NzI1XzYtMzAxMzZfNy0zMDEzNw&K=3Dg6m_pvULki1aP7QPO5kTOQ" ><img src=3D"=
+https://images.trvl-media.com/media/content/expus/email/wrapper/icons/googl=
+eplus_26x26.png" alt=3D"Google plus" width=3D"26" height=3D"26" border=3D"0=
+" style=3D"display:block;"></a>
+</td>
+<td align=3D"right" valign=3D"middle" style=3D"padding:0px 0px 0px 0px;" wi=
+dth=3D"36">
+<a alias=3D"instagram" href=3D"http://link.expediamail.com/c/4/?T=3DNjQxMjY=
+yODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5le=
+HBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ=
+09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQw=
+ODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzI=
+tMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2U%3A%=
+3A%3AaHR0cHM6Ly93d3cuaW5zdGFncmFtLmNvbS9leHBlZGlhP0VNTENJRD1VUy5QVC5FVkVOVF=
+RSSUdHRVJFRE1BSUxJTkcuRU5TUFVSQ0hBU0VDT05GSVJNQVRJT04uRkxJR0hUJkVNTERUTD1EQ=
+VRFMjAxOTA1MTUtSVNTVVguU0lEWC5LRVk5NDA4NTIwOTc3Mi5QQUlEWC5MQU5HRU5fVVMuTUNJ=
+RFguVEVTVDQuVkVSU1guTUlEUzEtMjU3OTNfMi0yOTY4Ml8zLTMwMTQwXzQtMzAxNDNfNS0yOTc=
+yNV82LTMwMTM2XzctMzAxMzc&K=3DxWC9QmPXRkAqYNyyAlzn3A" ><img src=3D"https://i=
+mages.trvl-media.com/media/content/expus/email/wrapper/icons/instagram_26x2=
+6.png" alt=3D"Instagram" width=3D"26" height=3D"26" border=3D"0" style=3D"d=
+isplay:block;"></a>
+</td>
+<td align=3D"right" valign=3D"middle" style=3D"padding:0px 0px 0px 0px;" wi=
+dth=3D"36">
+<a alias=3D"pinterest" href=3D"http://link.expediamail.com/c/4/?T=3DNjQxMjY=
+yODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5le=
+HBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ=
+09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQw=
+ODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzI=
+tMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2U%3A%=
+3A%3AaHR0cHM6Ly93d3cucGludGVyZXN0LmNvbS9FeHBlZGlhP0VNTENJRD1VUy5QVC5FVkVOVF=
+RSSUdHRVJFRE1BSUxJTkcuRU5TUFVSQ0hBU0VDT05GSVJNQVRJT04uRkxJR0hUJkVNTERUTD1EQ=
+VRFMjAxOTA1MTUtSVNTVVguU0lEWC5LRVk5NDA4NTIwOTc3Mi5QQUlEWC5MQU5HRU5fVVMuTUNJ=
+RFguVEVTVDQuVkVSU1guTUlEUzEtMjU3OTNfMi0yOTY4Ml8zLTMwMTQwXzQtMzAxNDNfNS0yOTc=
+yNV82LTMwMTM2XzctMzAxMzc&K=3DkniFEDXXrpZjel3RPeO8eA" ><img src=3D"https://i=
+mages.trvl-media.com/media/content/expus/email/wrapper/icons/pinterest_26x2=
+6.png" alt=3D"Pinterest" width=3D"26" height=3D"26" border=3D"0" style=3D"d=
+isplay:block;"></a>
+</td>
+<td align=3D"right" valign=3D"middle" style=3D"padding:0px 0px 0px 0px;" wi=
+dth=3D"36">
+<a alias=3D"You Tube" href=3D"http://link.expediamail.com/c/4/?T=3DNjQxMjYy=
+ODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5leH=
+BlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ0=
+9ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwO=
+DUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzIt=
+Mjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2U%3A%3=
+A%3AaHR0cHM6Ly93d3cueW91dHViZS5jb20vdXNlci9FeHBlZGlhP0VNTENJRD1VUy5QVC5FVkV=
+OVFRSSUdHRVJFRE1BSUxJTkcuRU5TUFVSQ0hBU0VDT05GSVJNQVRJT04uRkxJR0hUJkVNTERUTD=
+1EQVRFMjAxOTA1MTUtSVNTVVguU0lEWC5LRVk5NDA4NTIwOTc3Mi5QQUlEWC5MQU5HRU5fVVMuT=
+UNJRFguVEVTVDQuVkVSU1guTUlEUzEtMjU3OTNfMi0yOTY4Ml8zLTMwMTQwXzQtMzAxNDNfNS0y=
+OTcyNV82LTMwMTM2XzctMzAxMzc&K=3Dqsq8tOqL2xr-GTU4Jc4sTw"> <img src=3D"https:=
+//images.trvl-media.com/media/content/expus/email/wrapper/icons/youtube_26x=
+26.png" alt=3D"Youtube" width=3D"26" height=3D"26" border=3D"0" style=3D"di=
+splay:block;"></a>
+</td>
+<td align=3D"right" class=3D"hide" valign=3D"middle" style=3D"padding:0px 0=
+px 0px 0px;" width=3D"36">
+<a alias=3D"Viewfinder blog " href=3D"http://link.expediamail.com/c/4/?T=3D=
+NjQxMjYyODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3Acm=
+FkdS5leHBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUk=
+NIQVNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS=
+0VZOTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1=
+NzkzXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFs=
+c2U%3A%3A%3AaHR0cHM6Ly92aWV3ZmluZGVyLmV4cGVkaWEuY29tP0VNTENJRD1VUy5QVC5FVkV=
+OVFRSSUdHRVJFRE1BSUxJTkcuRU5TUFVSQ0hBU0VDT05GSVJNQVRJT04uRkxJR0hUJkVNTERUTD=
+1EQVRFMjAxOTA1MTUtSVNTVVguU0lEWC5LRVk5NDA4NTIwOTc3Mi5QQUlEWC5MQU5HRU5fVVMuT=
+UNJRFguVEVTVDQuVkVSU1guTUlEUzEtMjU3OTNfMi0yOTY4Ml8zLTMwMTQwXzQtMzAxNDNfNS0y=
+OTcyNV82LTMwMTM2XzctMzAxMzc&K=3DXPCZmAnPOmL8IH3OAAFtRA"><img src=3D"https:/=
+/images.trvl-media.com/media/content/expus/email/wrapper/icons/blog_26x26.p=
+ng" alt=3D"Viewfinder blog " width=3D"26" height=3D"26" border=3D"0" style=
+=3D"display:block;"></a>
+</td>
+</tr>
+</table>
+<!-- ######## End: Social ######## -->
+</td>
+</tr>
+<!--/\/\-------- End Social --------/\/\-->
+<tr>
+<td>
+<table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0">
+<tr>
+<td align=3D"left" valign=3D"top" bgcolor=3D"#ededed">
+<!-- ########## START: Call Center ########## -->
+<table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0">
+<tr>
+<td align=3D"center" valign=3D"top" bgcolor=3D"#ededed" class=3D"Phone" sty=
+le=3D"padding-left:20px; padding-right:20px;">
+<table width=3D"100%" cellpadding=3D"0" cellspacing=3D"0" border=3D"0">
+<tr>
+<td class=3D"SplitPhoneTagline" align=3D"center" valign=3D"middle" style=3D=
+"font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#6b6b6b; p=
+adding-bottom:2px; line-height:115%">Call to book: </td>
+</tr>
+<tr>
+<td class=3D"SplitPhoneTagline" align=3D"center" valign=3D"bottom" style=3D=
+"font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#6b6b6b; l=
+ine-height:115%;">
+<span class=3D"SplitPhoneTagline" align=3D"left" valign=3D"bottom" style=3D=
+"padding-left:10px; padding-right:10px; line-height:115%; padding-bottom:5p=
+x;">
+<a alias=3D"1.0_1033_Call_en_US" href=3D"tel:1-800-Expedia" style=3D"font-f=
+amily:Arial, Helvetica, sans-serif; font-size:16px; color:#0065b8; text-dec=
+oration:none;">
+1-800-Expedia
+</a>
+</span>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<!-- ########### END: Call Center ########### -->
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td align=3D"center" valign=3D"top" bgcolor=3D"#ededed" style=3D" padding:1=
+0px 0px 0px 0px;">
+<!-- ########## START: Footer Links ########## -->
+<!-- for "en_US", use its normal footerlink delimiter after link 5 -->
+<table align=3D"center" width=3D"100%" border=3D"0" cellpadding=3D"0" cells=
+pacing=3D"0">
+<tr>
+<td align=3D"center" valign=3D"middle" style=3D"font-family:Helvetica, Aria=
+l, sans-serif; font-size:13px; color:#616161; text-decoration:none; padding=
+:10px 20px 15px 20px;">
+<a alias=3D"1.0_1033_LinksAccount_en_US" href=3D"http://link.expediamail.co=
+m/c/4/?T=3DNjQxMjYyODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZj=
+BiZTY0%3AcmFkdS5leHBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5=
+HLkVOU1BVUkNIQVNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1=
+VYLlNJRFguS0VZOTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYL=
+k1JRFMxLTI1NzkzXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMw=
+MTM3%3AZmFsc2U%3A%3A%3AaHR0cHM6Ly93d3cuZXhwZWRpYS5jb20vdXNlci9hY2NvdW50P2xh=
+bmdpZD0xMDMzJkVNTENJRD1VUy5QVC5FVkVOVFRSSUdHRVJFRE1BSUxJTkcuRU5TUFVSQ0hBU0V=
+DT05GSVJNQVRJT04uRkxJR0hUJkVNTERUTD1EQVRFMjAxOTA1MTUtSVNTVVguU0lEWC5LRVk5ND=
+A4NTIwOTc3Mi5QQUlEWC5MQU5HRU5fVVMuTUNJRFguVEVTVDQuVkVSU1guTUlEUzEtMjU3OTNfM=
+i0yOTY4Ml8zLTMwMTQwXzQtMzAxNDNfNS0yOTcyNV82LTMwMTM2XzctMzAxMzc&K=3DB4vFIPbB=
+Ek9TSknHm95oDA" style=3D"font-family:Helvetica, Arial, sans-serif; color:#6=
+16161; font-size: 10px; font-weight:normal; text-decoration: underline;">My=
+ Account</a> <span style=3D"font-size: 10px;">| </span>
+<a alias=3D"1.0_1033_LinksUpdatePreferences_en_US" href=3D"http://link.expe=
+diamail.com/c/4/?T=3DNjQxMjYyODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUz=
+MjE0OGJlZjBiZTY0%3AcmFkdS5leHBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSR=
+URNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkw=
+NTE1LUlTU1VYLlNJRFguS0VZOTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q=
+0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMD=
+EzNl83LTMwMTM3%3AZmFsc2U%3A%3A%3AaHR0cHM6Ly93d3cuZXhwZWRpYS5jb20vdXNlci9hY2=
+NvdW50P2xhbmdpZD0xMDMzJkVNTENJRD1VUy5QVC5FVkVOVFRSSUdHRVJFRE1BSUxJTkcuRU5TU=
+FVSQ0hBU0VDT05GSVJNQVRJT04uRkxJR0hUJkVNTERUTD1EQVRFMjAxOTA1MTUtSVNTVVguU0lE=
+WC5LRVk5NDA4NTIwOTc3Mi5QQUlEWC5MQU5HRU5fVVMuTUNJRFguVEVTVDQuVkVSU1guTUlEUzE=
+tMjU3OTNfMi0yOTY4Ml8zLTMwMTQwXzQtMzAxNDNfNS0yOTcyNV82LTMwMTM2XzctMzAxMzc&K=
+=3DB4vFIPbBEk9TSknHm95oDA" style=3D"font-family:Helvetica, Arial, sans-seri=
+f; color:#616161; font-size: 10px; font-weight:normal; text-decoration: und=
+erline;"></a>
+<a alias=3D"1.0_1033_LinksPrivacy_en_US" href=3D"http://link.expediamail.co=
+m/c/4/?T=3DNjQxMjYyODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZj=
+BiZTY0%3AcmFkdS5leHBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5=
+HLkVOU1BVUkNIQVNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1=
+VYLlNJRFguS0VZOTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYL=
+k1JRFMxLTI1NzkzXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMw=
+MTM3%3AZmFsc2U%3A%3A%3AaHR0cHM6Ly93d3cuZXhwZWRpYS5jb20vcC9pbmZvLW90aGVyL3By=
+aXZhY3ktcG9saWN5Lmh0bT9sYW5naWQ9MTAzMyZFTUxDSUQ9VVMuUFQuRVZFTlRUUklHR0VSRUR=
+NQUlMSU5HLkVOU1BVUkNIQVNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNT=
+E1LUlTU1VYLlNJRFguS0VZOTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0L=
+lZFUlNYLk1JRFMxLTI1NzkzXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEz=
+Nl83LTMwMTM3&K=3DDV_wKfmt2qlBMk9JfGTasw" style=3D"font-family:Helvetica, Ar=
+ial, sans-serif; color:#616161; font-size: 10px; font-weight:normal; text-d=
+ecoration: underline;">Privacy Policy</a> <span style=3D"font-size: 10px;">=
+| </span>
+<a alias=3D"1.0_1033_LinksAddressBook_en_US" href=3D"http://link.expediamai=
+l.com/c/4/?T=3DNjQxMjYyODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OG=
+JlZjBiZTY0%3AcmFkdS5leHBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUl=
+MSU5HLkVOU1BVUkNIQVNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LU=
+lTU1VYLlNJRFguS0VZOTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFU=
+lNYLk1JRFMxLTI1NzkzXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83=
+LTMwMTM3%3AZmFsc2U%3A%3A%3AaHR0cDovL3d3dy5tZW1iZXJsYW5kaW5ncGFnZXMuY29tL2Fk=
+ZHJlc3NfYm9vay9hZGRyZXNzX2Jvb2tfYWRkLWEuaHRtP2xhbmdpZD0xMDMzJkVNTENJRD1VUy5=
+QVC5FVkVOVFRSSUdHRVJFRE1BSUxJTkcuRU5TUFVSQ0hBU0VDT05GSVJNQVRJT04uRkxJR0hUJk=
+VNTERUTD1EQVRFMjAxOTA1MTUtSVNTVVguU0lEWC5LRVk5NDA4NTIwOTc3Mi5QQUlEWC5MQU5HR=
+U5fVVMuTUNJRFguVEVTVDQuVkVSU1guTUlEUzEtMjU3OTNfMi0yOTY4Ml8zLTMwMTQwXzQtMzAx=
+NDNfNS0yOTcyNV82LTMwMTM2XzctMzAxMzc&K=3DDgcxmCBjKqgTCJzNi0hJMA" style=3D"fo=
+nt-family:Helvetica, Arial, sans-serif; color:#616161; font-size: 10px; fon=
+t-weight:normal; text-decoration: underline;">Add us to your address book</=
+a> <span style=3D"font-size: 10px;">| </span>
+<a alias=3D"1.0_1033_LinksCust_en_US" href=3D"http://link.expediamail.com/c=
+/4/?T=3DNjQxMjYyODE%3AMDItYzE5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZ=
+TY0%3AcmFkdS5leHBlZGlhQG9obWkub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLk=
+VOU1BVUkNIQVNFQ09ORklSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYL=
+lNJRFguS0VZOTQwODUyMDk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1J=
+RFMxLTI1NzkzXzItMjk2ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM=
+3%3AZmFsc2U%3A%3A%3AaHR0cHM6Ly9zZXJ2aWNlLmV4cGVkaWEuY29tL2VuLXVzLz9sYW5naWQ=
+9MTAzMyZFTUxDSUQ9VVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORk=
+lSTUFUSU9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODUyM=
+Dk3NzIuUEFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2=
+ODJfMy0zMDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3&K=3Dofqby4nMPmeA3N=
+a7_8YBZw" style=3D"font-family:Helvetica, Arial, sans-serif; color:#616161;=
+ font-size: 10px; font-weight:normal; text-decoration: underline;">Customer=
+ Service</a> <span style=3D"font-size: 10px;">| </span>
+<!-- todo: replace usefulllink delimiter for this final "en_US" section...?=
+? -->
+<a alias=3D"View in Browser" href=3D"http://link.expediamail.com/m/1/641262=
+81/02-c19135-6112b46a2d984e4a82e32148bef0be64/1/1/1" style=3D"font-family:H=
+elvetica, Arial, sans-serif; color:#616161; font-size: 10px; font-weight:no=
+rmal; text-decoration: underline;"><br> View this email in a web browser </=
+a>
+</td>
+</tr>
+</table> <!-- ########### END: Footer Links ########### -->
+</td>
+</tr>
+<tr>
+<td bgcolor=3D"#ededed" align=3D"left">
+<!-- ########## START: Legal Footer ########## -->
+<!--/* =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D =3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D LEGAL TEMPLATE =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D */-->
+<table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0">
+<tr>
+<td bgcolor=3D"#ededed" align=3D"left" valign=3D"top" style=3D"font-family:=
+Arial, Helvetica, sans-serif; color:#6b6b6b ; font-size: 10px; text-decorat=
+ion: none; padding:0px 20px 10px 20px;">
+You are receiving this transactional email based on a recent booking or acc=
+ount-related update on <a escapequotes=3D'true' alias=3D'1.0_1033_Legal_Exp=
+edia.com' href=3D'http://link.expediamail.com/c/4/?T=3DNjQxMjYyODE%3AMDItYz=
+E5MTM1LTYxMTJiNDZhMmQ5ODRlNGE4MmUzMjE0OGJlZjBiZTY0%3AcmFkdS5leHBlZGlhQG9obW=
+kub3Jn%3AVVMuUFQuRVZFTlRUUklHR0VSRURNQUlMSU5HLkVOU1BVUkNIQVNFQ09ORklSTUFUSU=
+9OLkZMSUdIVCZFTUxEVEw9REFURTIwMTkwNTE1LUlTU1VYLlNJRFguS0VZOTQwODUyMDk3NzIuU=
+EFJRFguTEFOR0VOX1VTLk1DSURYLlRFU1Q0LlZFUlNYLk1JRFMxLTI1NzkzXzItMjk2ODJfMy0z=
+MDE0MF80LTMwMTQzXzUtMjk3MjVfNi0zMDEzNl83LTMwMTM3%3AZmFsc2U%3A%3A%3AaHR0cHM6=
+Ly93d3cuZXhwZWRpYS5jb20vP2xhbmdpZD0xMDMzJkVNTENJRD1VUy5QVC5FVkVOVFRSSUdHRVJ=
+FRE1BSUxJTkcuRU5TUFVSQ0hBU0VDT05GSVJNQVRJT04uRkxJR0hUJkVNTERUTD1EQVRFMjAxOT=
+A1MTUtSVNTVVguU0lEWC5LRVk5NDA4NTIwOTc3Mi5QQUlEWC5MQU5HRU5fVVMuTUNJRFguVEVTV=
+DQuVkVSU1guTUlEUzEtMjU3OTNfMi0yOTY4Ml8zLTMwMTQwXzQtMzAxNDNfNS0yOTcyNV82LTMw=
+MTM2XzctMzAxMzc&K=3D3hzoztJPRYq1ZcAxqZU2yA' target=3D'_blank' style=3D'colo=
+r: #616161; text-decoration: underline;'><span style=3D'color: #616161'>Exp=
+edia.com</span></a>.<br /><br /><b>Contact information:</b> Expedia, Attn: =
+EMC Team <span class=3D'alr' style=3D'font-size:10px !important;'>333 108th=
+ Avenue NE Bellevue, WA 98004, USA</span>. Expedia cannot receive replies t=
+o this email. <br /><br /><span class=3D'alr'>CST# 2029030-50</span><br /><=
+br />&copy; 2019 Expedia, Inc. All rights reserved. Expedia, Expedia Reward=
+s, +VIP Access and the Airplane logos are registered trademarks, or tradema=
+rks, of Expedia, Inc. in the U.S. and/or other countries. All other product=
+s are trademarks of their respective owners.
+</td>
+</tr>
+</table>
+<!--/* =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D =3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D LEGAL TEMPLATE =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D */-->
+<!-- ########### END: Legal Footer ########### -->
+</td>
+</tr>
+<!-- ~~~~~~~~~~~~~~~~ START: Footer EMID ~~~~~~~~~~~~~~~~ -->
+<tr>
+<td align=3D"left" bgcolor=3D"#ededed" style=3D"font-family: Arial; color:#=
+616161; font-size:10px; text-decoration:none; padding-top:5px; padding-bott=
+om:5px; padding-left:20px; word-break:break-all;">
+<!-- ########## START: Footer EMID ########## -->
+<span><span style=3D'word-break:break-all;'>EMLCID=3DUS.PT.EVENTTRIGGEREDMA=
+ILING.ENSPURCHASECONFIRMATION.FLIGHT&EMLDTL=3DDATE20190515-ISSUX.SIDX.KEY94=
+085209772.PAIDX.LANGEN_US.MCIDX.TEST4.VERSX.MIDS1-25793_2-29682_3-30140_4-3=
+0143_5-29725_6-30136_7-30137</span>
+<!-- ########### END: Footer EMID ########### -->
+</td>
+</tr>
+<!-- ~~~~~~~~~~~~~~~~ END: Footer EMID ~~~~~~~~~~~~~~~~ -->
+</table>
+</td>
+</tr>
+</table>
+<!--safeRBT LI Track-->
+<!-- END safeRBT LI Track-->
+</body>
+</html><img src=3D"http://link.expediamail.com/o/3/TmpReE1qWXlPREU6TURJdFl6=
+RTVNVE0xTFRZeE1USmlORFpoTW1RNU9EUmxOR0U0TW1Vek1qRTBPR0psWmpCaVpUWTA6Y21Ga2R=
+TNWxlSEJsWkdsaFFHOW9iV2t1YjNKbjpWVk11VUZRdVJWWkZUbFJVVWtsSFIwVlNSVVJOUVVsTV=
+NVNUhMa1ZPVTFCVlVrTklRVk5GUTA5T1JrbFNUVUZVU1U5T0xrWk1TVWRJVkNaRlRVeEVWRXc5U=
+kVGVVJUSXdNVGt3TlRFMUxVbFRVMVZZTGxOSlJGZ3VTMFZaT1RRd09EVXlNRGszTnpJdVVFRkpS=
+Rmd1VEVGT1IwVk9YMVZUTGsxRFNVUllMbFJGVTFRMExsWkZVbE5ZTGsxSlJGTXhMVEkxTnprelh=
+6SXRNamsyT0RKZk15MHpNREUwTUY4MExUTXdNVFF6WHpVdE1qazNNalZmTmkwek1ERXpObDgzTF=
+RNd01UTTM/VjmPWyBFTB6eCmxMrEzsBQ" width=3D"1" height=3D"1" />
+------=_Part_59240170_1200021994.1557939162165--
+
+------=_Part_59240169_1155545267.1557939162165--

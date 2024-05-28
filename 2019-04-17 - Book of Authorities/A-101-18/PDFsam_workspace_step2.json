@@ -1,0 +1,79 @@
+{
+  "split.bybookmarks" : {
+    "regexp" : "",
+    "levelCombo.levels" : "",
+    "levelCombo.selected" : "",
+    "discardBookmarks" : "false",
+    "compress" : "true",
+    "split.bybookmarks.destinationbrowsableField" : "",
+    "prefix" : "PDFsam_",
+    "overwrite" : "false",
+    "version" : "VERSION_1_5"
+  },
+  "split.simple" : {
+    "splitAfterPredefined" : "true",
+    "discardBookmarks" : "false",
+    "splitByEvery.field" : "",
+    "compress" : "true",
+    "prefix" : "PDFsam_",
+    "splitAfter.field" : "",
+    "overwrite" : "false",
+    "version" : "VERSION_1_5",
+    "splitAfterPredefined.combo" : "ALL_PAGES",
+    "split.simple.destinationbrowsableField" : ""
+  },
+  "rotate" : {
+    "input.size" : "0",
+    "compress" : "true",
+    "prefix" : "PDFsam_",
+    "rotation" : "DEGREES_90",
+    "rotate.destinationbrowsableField" : "",
+    "rotationType" : "ALL_PAGES",
+    "overwrite" : "false",
+    "version" : "VERSION_1_5"
+  },
+  "extract" : {
+    "input.size" : "0",
+    "pages" : "",
+    "discardBookmarks" : "false",
+    "compress" : "true",
+    "prefix" : "PDFsam_",
+    "overwrite" : "false",
+    "version" : "VERSION_1_5",
+    "extract.destinationbrowsableField" : ""
+  },
+  "split.bysize" : {
+    "discardBookmarks" : "false",
+    "size" : "",
+    "compress" : "true",
+    "prefix" : "PDFsam_",
+    "split.bysize.destinationbrowsableField" : "",
+    "MEGABYTE" : "true",
+    "overwrite" : "false",
+    "version" : "VERSION_1_5"
+  },
+  "merge" : {
+    "footer" : "false",
+    "compress" : "true",
+    "input.reverse.0" : "false",
+    "input.0" : "G:\\data\\seized gold cbsa Oct21-2014\\2019-04-17 - Book of Authorities\\A-101-18\\A-101-18 Book of Authorities.pdf",
+    "toc" : "NONE",
+    "version" : "VERSION_1_5",
+    "input.range.0" : "2,1,3-32",
+    "merge.destinationbrowsableField" : "G:\\data\\seized gold cbsa Oct21-2014\\2019-04-17 - Book of Authorities\\A-101-18\\A-101-18 Book of Authorities - complete.pdf",
+    "input.size" : "1",
+    "acroForms" : "MERGE",
+    "input.step.0" : "1",
+    "outline" : "RETAIN",
+    "normalize" : "false",
+    "blankIfOdd" : "false",
+    "overwrite" : "false"
+  },
+  "alternatemix" : {
+    "input.size" : "0",
+    "alternatemix.destinationbrowsableField" : "",
+    "compress" : "true",
+    "overwrite" : "false",
+    "version" : "VERSION_1_5"
+  }
+}

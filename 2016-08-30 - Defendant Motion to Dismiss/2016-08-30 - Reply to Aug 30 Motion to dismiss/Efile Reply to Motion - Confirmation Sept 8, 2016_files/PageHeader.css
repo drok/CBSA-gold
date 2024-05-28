@@ -1,0 +1,77 @@
+#PageHeader_Container
+{
+	width: 750px;
+	float: left;
+	margin: 0px;
+	margin-top: 5px;
+	border: 0px;
+	padding: 0px;
+	vertical-align: baseline;
+}
+
+#PageHeader_Cell1
+{
+	border: 0px;
+	height: 182px;
+	width: 150px;
+	padding: 0px;
+	margin: 0px;
+}
+
+#PageHeader_Cell2
+{
+	border: 0px;
+	height: 182px;
+	width: 600px;
+	padding: 0px;
+	margin: 0px;
+}
+.PageHeader_Spacer
+{
+	height: 30px;
+	width: 2px;
+}
+
+#PageHeader_CourtLogo
+{
+	border: 0px;
+	height: 182px;
+	width: 150px;
+	padding: 0px;
+	margin: 0px;
+}
+
+#PageHeader_Title
+{
+	float:right;
+	height: 30px;
+	width: 598px;
+	line-height: 2em;
+	text-align: center;
+	background-color: #EDCE87;
+	padding: 0px;
+	margin: 0px;
+	font-stretch: narrower;
+	color: #000000;
+	font-size: 18px;
+	font-family: Helvetica, Arial, sans-serif;
+	font-weight: bold;
+}
+
+.PageHeader_Image
+{
+	line-height: 0em;
+	padding: 0px;
+	margin: 0px;
+	height: 116px;
+	width: 600px;
+}
+
+.PageHeader_Menu
+{
+	vertical-align: middle; 
+	text-align: center; 
+	background-color: #EDCE87;
+	height: 30px;
+	width: 98.5px;
+} 

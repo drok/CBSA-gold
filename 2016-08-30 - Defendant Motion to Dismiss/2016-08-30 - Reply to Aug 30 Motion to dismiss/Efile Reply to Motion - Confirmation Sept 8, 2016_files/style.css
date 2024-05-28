@@ -1,0 +1,213 @@
+/* FCT HEADER DEPENDENCIES */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+margin: 0px;
+padding: 0px;
+border: 0px none;
+outline: 0px none;
+/*font-size: 100%;*/
+vertical-align: baseline;
+/*background: none repeat scroll 0% 0% transparent;*/
+font-stretch: narrower;
+}
+td {
+padding: 0px;
+vertical-align: top;
+border-bottom: none;
+border-right: none;
+}
+td.txtBlack11 {
+background-color: #EDCE87;
+}
+td.menu3 {
+background-color: #000000;
+}
+table {
+margin-bottom: 0;
+}
+
+
+
+/*************************************
+   WELCOME TO THE CUSTOM STYLESHEET
+--------------------------------------
+              style.css
+        BlueTrip CSS Framework
+    Put your custom styles in here.
+***************************************/
+
+/**************************************/
+/*           COLOR SCHEME             */
+/**************************************
+- black		#000
+- white		#fff
+-           #
+-           #
+-           #
+***************************************/
+
+
+/**************************************/
+/*              GLOBALS               */
+/**************************************/
+html, body {
+	height: 100%;
+	font-stretch: narrower;
+}
+
+/* RM
+.contentContainer h1 {
+	margin-top: 0.5em;
+	margin-bottom: 1em;
+}
+*/
+
+.contentContainer p {
+	margin-top: 1em;
+}
+
+.contentContainer h1, .contentContainer p, .contentContainer div {
+	/*padding-left: 0.25em;*/
+}
+
+/**************************************/
+/*              HEADER                */
+/**************************************/
+.fctHeader {
+	margin-top: 5px;
+	
+}
+
+/**************************************/
+/*             NAVIGATION             */
+/**************************************/
+.appTopBar {
+	background-color: #EDCE87;
+	padding: 0.2em 0em 0.2em 0.5em;
+}
+.appSideBar {
+	/*padding-top: 1em;*/
+	/*height: 100%;*/
+	/*min-height: 100%;*/
+	/*background-color: #7BAED6;*/
+}
+.appSideBar div {
+	margin-bottom: 0.5em;
+	padding: 2px;
+	padding-left: 0px
+}
+
+a:focus {
+outline-style: dotted;
+outline-width: 1px;
+}
+
+textarea:focus, input[type='text']:focus, input[type='password']:focus, select:focus {
+outline: 2px solid #d8ae42;
+}
+
+/**************************************/
+/*            MAIN CONTENT            */
+/**************************************/
+.appContainer {
+	/*padding-top: 1em;*/
+	/*height: 100%;*/
+	/*min-height: 100%;*/
+	margin-bottom: 1.5em;
+}
+.contentContainer {
+	height: 100%;
+	min-height: 100%;
+	background-color: #FFFFFF;
+	font-size: 1.08em;
+	line-height: 1.3;
+}
+.successColContainer, .noWidthColContainer {
+	margin-top: 0;
+	margin-bottom: 0.5em;
+	line-height: 1.3em;
+}
+.successColContainer {
+	/*font-size: 10pt;*/
+	font-size: 12pt;
+	overflow: auto;
+	width: 100%;
+}
+.successColContainer label {
+	font-size: 10pt;
+}
+
+.successColContainer label.outputLabel {
+}
+.successColContainer span.outputLabel {
+	font-weight: bold;
+	width: 150px;
+	font-weight: bold;
+	font-size: 10pt;
+}
+.outputValue, .successColContainer label.outputValue, .noWidthColContainer label.outputValue {
+	font-weight: normal;
+}
+.noWidthColContainer label {
+	padding-right: 5px;
+}
+.noWidthColContainer label.documentFileName {
+	width: 80px;
+}
+
+.successColContainer span, .noWidthColContainer span {
+	float: left;
+	font-size: 10pt;
+	
+}
+.successColContainer span p, .noWidthColContainer span p, .successColContainer label.outputValue p {
+	margin-top: 0;
+}
+div.documentList div {
+	margin-bottom: 0.5em;
+	width: 180px;
+	word-wrap: break-word;
+}
+div.handlingInstructions {
+	width: 150px;
+	word-wrap: break-word;
+}
+span.handlingInstructions p {
+	margin-top: 0;
+}
+div.handlingInstructions p {
+	margin-top: 0;
+}
+.clearfix:after { 
+   content: "."; 
+   visibility: hidden; 
+   display: block; 
+   height: 0; 
+   clear: both;
+}
+#confirmationNumberContainer {
+	margin-top: 1.5em;
+	margin-bottom: 1em;
+	font-size: larger;
+	line-height: 1.5;
+}
+/**************************************/
+/*               FOOTER               */
+/**************************************/
+.appFooter {
+	background-color: #EDCE87;
+	padding: 0.2em 0em 0.2em 0.5em;
+}
+
+#PageFooter_Container {
+	font-size: 1.3em;			
+}	
+
+#SideBar_Container {
+	font-size: 1.3em;
+	font-weight: bold;
+		
+}	
+
+#projectInfo p {
+	margin: 0;
+}

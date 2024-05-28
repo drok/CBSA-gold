@@ -1,0 +1,34 @@
+Conditions
+
+ - The communication must be between a solicitor and client
+ 
+ - communication must be made in confidence
+ 
+ - communication must be made in the course of seeking legal advice
+	does not apply when the lawyer is acting as business counsellor
+
+	
+	Is "Legal Services Unit" acting as a solicitor or as a third party expert?
+	
+	The adjudicator, had already acted on her own beliefs in giving the reasons.
+	LSU was involved only later, and evident from their summarized conclusion,
+	they were used in a capacity of a third party asked to provide an opinion on how
+	the Customs Act applies to the coins. This opinion was provided to the plaintiff
+	as further explanation of the reasons.
+	
+	As the adjudicator is not a solicitor, nor is LSU acting as one, there cannot be any client-solicitor privilege.
+	
+Voluntary/Express waiver
+
+- refering to them in sch A to an affidavit of documents
+	Re Briamore Manufacturing Ltd., [1986] 1 W.L.R. 1429.
+	
+
+All docs must be produced
+	Sopinka, supra, fn. 2, at para. 14.123.
+
+Waiver by Implication
+	- when a party puts his "state of mind" in issue in the pleadings, and the state of mind was informed by legal advice, sol-cli priv is deemed to be waived.
+	when a party relies on legal advice, he/she cannot in fairness be prmitterd to use privilege to prevent the other party from exploring its validity
+	S&K Processors Ltd. v. Campbell Ave. Herring Producers Ltd. (1983), 35 C.P.C. 146 at para. 6 (B.C.S.C.).
+

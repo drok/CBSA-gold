@@ -1,0 +1,87 @@
+{
+  "split.bybookmarks" : {
+    "regexp" : "",
+    "levelCombo.levels" : "",
+    "levelCombo.selected" : "",
+    "discardBookmarks" : "false",
+    "compress" : "true",
+    "split.bybookmarks.destinationbrowsableField" : "",
+    "prefix" : "PDFsam_",
+    "overwrite" : "false",
+    "version" : "VERSION_1_5"
+  },
+  "split.simple" : {
+    "splitAfterPredefined" : "true",
+    "discardBookmarks" : "false",
+    "splitByEvery.field" : "",
+    "compress" : "true",
+    "prefix" : "PDFsam_",
+    "splitAfter.field" : "",
+    "overwrite" : "false",
+    "version" : "VERSION_1_5",
+    "splitAfterPredefined.combo" : "ALL_PAGES",
+    "split.simple.destinationbrowsableField" : ""
+  },
+  "rotate" : {
+    "input.size" : "0",
+    "compress" : "true",
+    "prefix" : "PDFsam_",
+    "rotation" : "DEGREES_90",
+    "rotate.destinationbrowsableField" : "",
+    "rotationType" : "ALL_PAGES",
+    "overwrite" : "false",
+    "version" : "VERSION_1_5"
+  },
+  "extract" : {
+    "input.size" : "0",
+    "pages" : "",
+    "discardBookmarks" : "false",
+    "compress" : "true",
+    "prefix" : "PDFsam_",
+    "overwrite" : "false",
+    "version" : "VERSION_1_5",
+    "extract.destinationbrowsableField" : ""
+  },
+  "split.bysize" : {
+    "discardBookmarks" : "false",
+    "size" : "",
+    "compress" : "true",
+    "prefix" : "PDFsam_",
+    "split.bysize.destinationbrowsableField" : "",
+    "MEGABYTE" : "true",
+    "overwrite" : "false",
+    "version" : "VERSION_1_5"
+  },
+  "merge" : {
+    "input.reverse.2" : "false",
+    "footer" : "false",
+    "compress" : "true",
+    "input.reverse.1" : "false",
+    "input.reverse.0" : "false",
+    "input.0" : "G:\\data\\seized gold cbsa Oct21-2014\\2018-05-31 - Letter explaining late Appeal Aggreement\\A-101-18 Letter requesting late filing of agreement.pdf",
+    "input.range.1" : "",
+    "input.1" : "G:\\data\\seized gold cbsa Oct21-2014\\2018-05-31 - Letter explaining late Appeal Aggreement\\A-101-18 - Agreement on contents of appeal book.pdf",
+    "input.range.2" : "",
+    "toc" : "NONE",
+    "input.2" : "G:\\data\\seized gold cbsa Oct21-2014\\2018-05-31 - Letter explaining late Appeal Aggreement\\RE_ Appeals A-101-18 and A-102-18, Radu Hociung vs.pdf",
+    "version" : "VERSION_1_5",
+    "input.range.0" : "",
+    "merge.destinationbrowsableField" : "G:\\data\\seized gold cbsa Oct21-2014\\2018-05-31 - Letter explaining late Appeal Aggreement\\PDFsam_merge.pdf",
+    "input.size" : "3",
+    "acroForms" : "MERGE",
+    "input.step.0" : "1",
+    "outline" : "RETAIN",
+    "input.step.1" : "1",
+    "input.step.2" : "1",
+    "normalize" : "false",
+    "blankIfOdd" : "false",
+    "overwrite" : "false"
+  },
+  "alternatemix" : {
+    "input.size" : "0",
+    "alternatemix.destinationbrowsableField" : "",
+    "compress" : "true",
+    "overwrite" : "false",
+    "version" : "VERSION_1_5"
+  }
+}
